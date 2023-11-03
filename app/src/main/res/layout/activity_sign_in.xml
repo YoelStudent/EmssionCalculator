@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#303F9F"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/nuc"
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:elevation="8dp"
+        android:clipToOutline="true"/>
+
+    <EditText
+        android:id="@+id/editTextFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_logo"
+        android:layout_marginTop="16dp"
+        android:hint="Full Name"
+        android:textColor="#212121"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextFullName"
+        android:layout_marginTop="8dp"
+        android:hint="Email"
+        android:textColor="#212121"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextNewPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextEmail"
+        android:layout_marginTop="8dp"
+        android:hint="New Password"
+        android:textColor="#212121"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editTextAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextNewPassword"
+        android:layout_marginTop="8dp"
+        android:hint="Address"
+        android:textColor="#212121"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextBirthDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextAddress"
+        android:layout_marginTop="8dp"
+        android:hint="Birth Date"
+        android:textColor="#212121"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="date" />
+
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextBirthDate"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerGender"
+        android:layout_marginTop="16dp"
+        android:text="Sign Up"
+        android:textColor="#FFFFFF"
+        android:background="#1976D2"
+        android:padding="10dp"
+        android:elevation="4dp"
+        android:stateListAnimator="@null"/>
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSignUp"
+        android:layout_marginTop="8dp"
+        android:text="Already have an account? Sign in"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
