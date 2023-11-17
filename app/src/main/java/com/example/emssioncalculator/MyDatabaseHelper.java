@@ -110,7 +110,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
     Boolean CheckLogIn(String Email, String Pass)
     {
-        String query = " SELECT * FROM "
+
     }
 
 }
