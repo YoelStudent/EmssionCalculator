@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:hint="Full Name"
         android:textColor="#212121"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="text" />
@@ -37,7 +37,7 @@
         android:layout_marginTop="8dp"
         android:hint="Email"
         android:textColor="#212121"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="textEmailAddress" />
@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:hint="New Password"
         android:textColor="#212121"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="textPassword" />
@@ -63,7 +63,7 @@
         android:layout_marginTop="8dp"
         android:hint="Address"
         android:textColor="#212121"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="text" />
@@ -76,7 +76,7 @@
         android:layout_marginTop="8dp"
         android:hint="Birth Date"
         android:textColor="#212121"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="date" />
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextBirthDate"
         android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
+        android:background="#CCFFFFFF"
         android:elevation="2dp"
         android:layout_marginBottom="8dp"/>
 
@@ -99,7 +99,7 @@
         android:layout_marginTop="16dp"
         android:text="Sign Up"
         android:textColor="#FFFFFF"
-        android:background="#1976D2"
+        android:background="#CC1976D2"
         android:padding="10dp"
         android:elevation="4dp"
         android:stateListAnimator="@null"/>

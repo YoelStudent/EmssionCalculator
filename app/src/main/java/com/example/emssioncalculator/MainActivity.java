@@ -11,12 +11,14 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private Button btnLogIn;
     private TextView tvSignIn;
+    private MyDatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvSignIn = findViewById(R.id.tvSignUp);
         btnLogIn = findViewById(R.id.btnLogin);
+        db = new MyDatabaseHelper(this);
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
