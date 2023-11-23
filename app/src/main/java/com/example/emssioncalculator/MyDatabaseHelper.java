@@ -45,7 +45,29 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+    boolean checkExists(String Email)
+    {
+        String query = " SELECT EXISTS (SELECT * FROM " + TABLE_NAME + " WHERE Email = "+ Email+ ")";
+        try (SQLiteDatabase db = this.getReadableDatabase())
+        {
+            Cursor cursor = db.rawQuery(query,null);
+            Boolean result = false;
+            if (cursor!=null){
+                if (cursor.moveToFirst()){
+                    int exists = cursor.getInt(0);
+                    result = exists==1;
+                }
+                cursor.close();
+            }
+            return result;
 
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
     void addItem(String Name, String Email, String Pass, String Address, String Date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -111,6 +133,26 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     Boolean CheckLogIn(String Email, String Pass)
     {
 
+        String query = " SELECT EXISTS (SELECT * FROM " + TABLE_NAME + " WHERE Email = "+ Email+ " AND password = "+ Pass+ ")";
+        try (SQLiteDatabase db = this.getReadableDatabase())
+        {
+            Cursor cursor = db.rawQuery(query,null);
+            Boolean result = false;
+            if (cursor!=null){
+                if (cursor.moveToFirst()){
+                    int exists = cursor.getInt(0);
+                    result = exists==1;
+                }
+                cursor.close();
+            }
+            return result;
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
