@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnLogIn;
     private TextView tvSignIn;
@@ -19,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://greencalc-ad9e8-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference myRef = database.getReference("Email");
+
+        myRef.setValue("yoel@gmail.com");
+
         tvSignIn = findViewById(R.id.tvSignUp);
         btnLogIn = findViewById(R.id.btnLogin);
         edPass = findViewById(R.id.editTextPassword);
