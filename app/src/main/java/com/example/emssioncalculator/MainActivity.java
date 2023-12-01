@@ -22,10 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://greencalc-ad9e8-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference myRef = database.getReference("Email");
 
-        myRef.setValue("yoel@gmail.com");
 
         tvSignIn = findViewById(R.id.tvSignUp);
         btnLogIn = findViewById(R.id.btnLogin);
