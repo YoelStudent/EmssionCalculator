@@ -69,13 +69,15 @@ public class SignUpActivity extends AppCompatActivity {
 
               //  String id;
                 //databaseReference.child("user").setValue(Email);
-                User user = new User(Name,Email);
-
-                String id = firebaseAuth.getCurrentUser().getUid();
-                databaseReference.child("users").child(id).setValue(user);
                 firebaseAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        User user = new User(Name,Email);
+
+                        String id = firebaseAuth.getCurrentUser().getUid();
+                        databaseReference.child("users").child(id).child("Email").setValue(Email);
+                        databaseReference.child("users").child(id).child("Name").setValue(Name);
+                        databaseReference.child("users").child(id).child("Pass").setValue(Pass);
 
                     }
                 });
