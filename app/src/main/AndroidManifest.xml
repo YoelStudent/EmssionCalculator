@@ -13,6 +13,9 @@
         android:theme="@style/Theme.EmssionCalculator"
         tools:targetApi="31">
         <activity
+            android:name=".FireBaseUiActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainPageActivity"
             android:exported="false" />
         <activity

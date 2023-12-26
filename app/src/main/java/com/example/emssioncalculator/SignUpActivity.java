@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,11 +27,14 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edEmail, edName, edPass, edAddress, edBirthDate;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+
         edEmail = findViewById(R.id.editTextEmail);
         edName = findViewById(R.id.editTextFullName);
         edPass = findViewById(R.id.editTextNewPassword);
@@ -40,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btnSignUp);
         MyDatabaseHelper db = new MyDatabaseHelper(this);
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance("https://greencalc-ad9e8-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+        databaseReference = database.getReference();
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,30 +61,29 @@ public class SignUpActivity extends AppCompatActivity {
                 String Address = edAddress.getText().toString();
                 String BirthDate = edBirthDate.getText().toString();
                 Boolean emailExists = db.checkExists(Email);
-                if (!emailExists)
-                {
-                    db.addItem(Name,Email,Pass,Address,BirthDate);
+                if (!emailExists) {
+                    db.addItem(Name, Email, Pass, Address, BirthDate);
 
                 }
-//                user.setName(Name);
-//                user.setEmail(Email);
-//                user.setPass(Pass);
 
-
-              //  String id;
-                //databaseReference.child("user").setValue(Email);
                 firebaseAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        User user = new User(Name,Email);
-
-                        String id = firebaseAuth.getCurrentUser().getUid();
-                        databaseReference.child("users").child(id).child("Email").setValue(Email);
-                        databaseReference.child("users").child(id).child("Name").setValue(Name);
-                        databaseReference.child("users").child(id).child("Pass").setValue(Pass);
-
-                    }
-                });
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Toast.makeText(SignUpActivity.this, "DONEEEEEEEE.",
+                                            Toast.LENGTH_SHORT).show();
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    User user1 = new User(Email, Pass);
+                                    databaseReference.child("users").child(user.getUid()).child("Email").setValue(Email);
+                                    databaseReference.child("users").child(user.getUid()).child("Email").setValue(Name);
+                                    databaseReference.child("users").child(user.getUid()).child("Pass").setValue(Pass);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
 
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

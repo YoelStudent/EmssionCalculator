@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "803797901157",
-    "project_id": "greencalc-ad9e8",
-    "storage_bucket": "greencalc-ad9e8.appspot.com"
+    "project_number": "967236850727",
+    "project_id": "greencalproj",
+    "storage_bucket": "greencalproj.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:803797901157:android:68ca1496ce8408a24d0b8c",
+        "mobilesdk_app_id": "1:967236850727:android:c88d12910522f86d23ea02",
         "android_client_info": {
           "package_name": "com.example.emssioncalculator"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDINkxD7RGaBJ_g-dFXDc7gQJojeEX8Vu0"
+          "current_key": "AIzaSyBCiBKoRtqUhB7B2g2D_xQLL6-YQaMZ3QQ"
         }
       ],
       "services": {
