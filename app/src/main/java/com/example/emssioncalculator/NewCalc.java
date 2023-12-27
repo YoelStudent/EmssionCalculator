@@ -27,6 +27,7 @@ public class NewCalc extends Fragment {
     private String mParam1;
     private String mParam2;
     LinearLayout main;
+    View fag;
     public NewCalc() {
         // Required empty public constructor
     }
@@ -58,15 +59,19 @@ public class NewCalc extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        TextView textView = new TextView(requireContext());
+        textView.setText("asdasd");
+        main.addView(textView);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        fag = inflater.inflate(R.layout.fragment_new_calc, container, false);
+        main = fag.findViewById(R.id.mainlay);
 
-        
-
-        return inflater.inflate(R.layout.fragment_new_calc, container, false);
+        return fag;
     }
 }

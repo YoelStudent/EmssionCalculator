@@ -1,6 +1,7 @@
 package com.example.emssioncalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 
 public class MainPageActivity extends AppCompatActivity
 {
+    private Boolean flag = true;
     ImageButton btn_add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +21,24 @@ public class MainPageActivity extends AppCompatActivity
         btn_add = findViewById(R.id.btnCalculateRoute);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view, NewCalc.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("name") // Name can be null
-                        .commit();
+
+                if (flag)
+                {
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container_view, NewCalc.class, null).commit();
+                    flag = !flag;
+                }
+                else
+                {
+                    Fragment newCalc = fragmentManager.findFragmentById(R.id.fragment_container_view);
+                    fragmentManager.beginTransaction()
+                            .remove(newCalc)
+                            .commit();
+                    flag = !flag;
+                }
+
             }
         });
 
