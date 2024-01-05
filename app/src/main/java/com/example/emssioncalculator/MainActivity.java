@@ -3,10 +3,14 @@ package com.example.emssioncalculator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogIn;
     private TextView tvSignIn;
     private EditText edEmail, edPass;
+    private CheckBox cbRem;
     private MyDatabaseHelper db;
     FirebaseAuth firebaseAuth;
     @Override
@@ -31,12 +36,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+        cbRem = findViewById(R.id.cbRemeberMe);
         tvSignIn = findViewById(R.id.tvSignUp);
         btnLogIn = findViewById(R.id.btnLogin);
         edPass = findViewById(R.id.editTextPassword);
         edEmail = findViewById(R.id.editTextUsername);
         db = new MyDatabaseHelper(this);
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Boolean flag = sharedPref.getBoolean("userrem", false);
+        if (flag)
+        {
+            edEmail.setText(sharedPref.getString("useremail", ""));
+            edPass.setText(sharedPref.getString("userpass", ""));
+            cbRem.setChecked(sharedPref.getBoolean("userrem", false));
+        }
+
+        cbRem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!cbRem.isChecked())
+                {
+                    editor.putString("useremail", " ");
+                    editor.putString("userpass", " ");
+                    editor.putBoolean("userrem", false);
+                    editor.apply();
+                }
+            }
+        });
+
+
+
+
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +82,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String Email = edEmail.getText().toString();
                 String Pass = edPass.getText().toString();
+                if (cbRem.isChecked())
+                {
+                    editor.putString("useremail", Email);
+                    editor.putString("userpass", Pass);
+                    editor.putBoolean("userrem", true);
+                    editor.apply();
+                }
+                else
+                {
+                    editor.putString("useremail", " ");
+                    editor.putString("userpass", " ");
+                    editor.putBoolean("userrem", false);
+                    editor.apply();
+                }
                 firebaseAuth.signInWithEmailAndPassword(Email,Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
