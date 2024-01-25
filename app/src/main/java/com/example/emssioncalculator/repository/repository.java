@@ -2,8 +2,8 @@ package com.example.emssioncalculator.repository;
 
 import android.content.Context;
 
-import com.example.emssioncalculator.MyDatabaseHelper;
-import com.example.emssioncalculator.User;
+import com.example.emssioncalculator.UI.MyDatabaseHelper;
+import com.example.emssioncalculator.Models.User;
 
 public class repository {
     private MyDatabaseHelper db;

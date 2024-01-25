@@ -1,8 +1,10 @@
-package com.example.emssioncalculator;
-
+package com.example.emssioncalculator.UI;
+import com.example.emssioncalculator.Models.SignUp;
+import com.example.emssioncalculator.repository.repository;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.emssioncalculator.R;
+import com.example.emssioncalculator.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.AuthResult;
@@ -27,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edEmail, edName, edPass, edAddress, edBirthDate;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    private repository repository;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
         MyDatabaseHelper db = new MyDatabaseHelper(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = database.getReference();
+        repository = new repository(this);
+        Context c = this;
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +66,17 @@ public class SignUpActivity extends AppCompatActivity {
                 String Pass = edPass.getText().toString();
                 String Address = edAddress.getText().toString();
                 String BirthDate = edBirthDate.getText().toString();
-                Boolean emailExists = db.checkExists(Email);
-                if (!emailExists) {
-                    db.addItem(Name, Email, Pass, Address, BirthDate);
+                User u = new User(Email, Name,Pass,Address,BirthDate);
+                SignUp s = new SignUp(u,c);
+                if(s.Check_User()==0)
+                {
+                    Boolean emailExists = db.checkExists(Email);
+                    if (!emailExists) {
+                        db.addItem(Name, Email, Pass, Address, BirthDate);
 
+                    }
                 }
+
 
                 firebaseAuth.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

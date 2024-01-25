@@ -1,4 +1,4 @@
-package com.example.emssioncalculator;
+package com.example.emssioncalculator.Models;
 
 public class User {
     private String Email;

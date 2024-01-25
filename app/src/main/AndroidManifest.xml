@@ -16,13 +16,13 @@
             android:name=".FireBaseUiActivity"
             android:exported="false" />
         <activity
-            android:name=".MainPageActivity"
+            android:name=".UI.MainPageActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".UI.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
