@@ -1,25 +1,37 @@
 package com.example.emssioncalculator;
 
 public class User {
-    public String Email;
-    //public String Pass;
-    public String Name;
-    public User(String Email, String Name)
+    private String Email;
+    private String Pass;
+    private String Name;
+    private String Address;
+    private String Age;
+    public User(String Email, String Name,String Pass, String Address, String Age)
     {
         this.Email = Email;
-      //  this.Pass = Pass;
+        this.Pass = Pass;
         this.Name = Name;
+        this.Address = Address;
+        this.Age = Age;
     }
 
-    public void setEmail(String email) {
-        Email = email;
+    public String getEmail() {
+        return Email;
     }
 
-    //public void setPass(String pass) {
-           // Pass = pass;
-  //  }
+    public String getPass() {
+        return Pass;
+    }
 
-    public void setName(String name) {
-        Name = name;
+    public String getAddress() {
+        return Address;
+    }
+
+    public String getAge() {
+        return Age;
+    }
+
+    public String getName() {
+        return Name;
     }
 }

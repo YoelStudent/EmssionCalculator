@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, "DONEEEEEEEE.",
                                             Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    User user1 = new User(Email, Pass);
+                                    User user1 = new User(Email, Name, Pass, Address, BirthDate);
                                     databaseReference.child("users").child(user.getUid()).child("Email").setValue(Email);
                                     databaseReference.child("users").child(user.getUid()).child("Email").setValue(Name);
                                     databaseReference.child("users").child(user.getUid()).child("Pass").setValue(Pass);
