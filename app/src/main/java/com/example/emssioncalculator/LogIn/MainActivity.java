@@ -1,4 +1,4 @@
-package com.example.emssioncalculator.UI;
+package com.example.emssioncalculator.LogIn;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.emssioncalculator.R;
+import com.example.emssioncalculator.DB.MyDatabaseHelper;
+import com.example.emssioncalculator.SignUp.SignUpActivity;
+import com.example.emssioncalculator.UI.MainPageActivity;
 import com.example.emssioncalculator.repository.repository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

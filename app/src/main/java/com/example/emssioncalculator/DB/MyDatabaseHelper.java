@@ -1,4 +1,4 @@
-package com.example.emssioncalculator.UI;
+package com.example.emssioncalculator.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
