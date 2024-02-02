@@ -1,4 +1,4 @@
-package com.example.emssioncalculator;
+package com.example.emssioncalculator.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
-class MyDatabaseHelper extends SQLiteOpenHelper {
+public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "BookLibrary.db";
@@ -27,7 +27,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    MyDatabaseHelper(@Nullable Context context) {
+    public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -45,7 +45,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    boolean checkExists(String Email)
+    public boolean checkExists(String Email)
     {
         String query = " SELECT EXISTS (SELECT * FROM " + TABLE_NAME + " WHERE Email = "+ Email+ ")";
         try (SQLiteDatabase db = this.getReadableDatabase())
@@ -68,7 +68,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-    void addItem(String Name, String Email, String Pass, String Address, String Date){
+    public void addItem(String Name, String Email, String Pass, String Address, String Date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
