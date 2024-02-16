@@ -6,6 +6,18 @@
     tools:context=".UI.NewCalc"
     android:id="@+id/mainlay"
     android:orientation="vertical">
+    <SearchView
+        android:id="@+id/svMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+    </SearchView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/tvDis"
+        android:layout_marginTop="150dp"
+        android:text="adasdasasasasasasasasasasasasas">
 
+    </TextView>
 </LinearLayout>
