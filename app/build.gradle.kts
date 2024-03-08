@@ -25,6 +25,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    android {
+        buildFeatures {
+            buildConfig = true
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,7 +37,7 @@ android {
 }
 
 dependencies {
-
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation("commons-io:commons-io:2.5")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -47,9 +52,11 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.libraries.places:places:3.3.0")
 
     implementation("com.google.firebase:firebase-auth")
     val fragment_version = "1.6.2"
+    implementation("com.google.android.libraries.places:places:3.3.0")
 
     // Java language implementation
     implementation("androidx.fragment:fragment:$fragment_version")
