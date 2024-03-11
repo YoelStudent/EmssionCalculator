@@ -4,6 +4,13 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +18,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,26 +50,28 @@ public class HTTPreq implements Runnable
 
             reader = new BufferedReader(new InputStreamReader(stream));
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line = "";
 
             while ((line = reader.readLine()) != null) {
                 buffer.append(line+"\n");
-                Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
             }
-            distance_ret = buffer.substring(0);
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    JSONArray array = jsonObject.getJSONArray("routes");
-//                    JSONObject routes = array.getJSONObject(0);
-//                    JSONArray legs = routes.getJSONArray("legs");
-//                    JSONObject steps = legs.getJSONObject(0);
-//                    JSONObject distance = steps.getJSONObject("distance");
-//                    parsedDistance=distance.getString("text");
+            String message = org.apache.commons.io.IOUtils.toString(reader);
+
+            JSONObject json = new JSONObject(buffer.toString());
+            JSONArray array = json.getJSONArray("rows");
+            JSONObject row = array.getJSONObject(0);
+            JSONArray ele = row.getJSONArray("elements");
+            JSONObject dis = ele.getJSONObject(0);
+            JSONObject distance = dis.getJSONObject("distance");
+            distance_ret=distance.getString("text");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
     public String Get_Distance()
