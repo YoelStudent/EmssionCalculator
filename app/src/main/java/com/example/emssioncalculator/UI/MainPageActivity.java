@@ -64,7 +64,8 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.fragment_container_view)).commit();
+                findViewById(R.id.fragment_container_view).setVisibility(View.INVISIBLE);
+
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
 
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -90,7 +91,7 @@ public class MainPageActivity extends AppCompatActivity
                                         public void onSuccess(Location location) {
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
-                                                calc.getDistance(placesClient.findCurrentPlace(), place );
+                                                calc.getDistance(location,place);
 
                                             }
                                         }
@@ -102,9 +103,11 @@ public class MainPageActivity extends AppCompatActivity
             }
         });
         btn_profile.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
+                findViewById(R.id.fragment_container_view).setVisibility(VISIBLE);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()

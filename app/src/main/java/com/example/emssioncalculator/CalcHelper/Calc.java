@@ -15,14 +15,14 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 public class Calc {
 
-    public String getDistance(Place origin, Place des) {
-
-        String u = "https://maps.googleapis.com/maps/api/distancematrix/json?origin=" + origin.getAddress() + "&destination=" + des.getAddress() + "&sensor=false&units=metric&mode=drivingA&key=";
+    public String getDistance(Location location,Place des) {
+        String u = "  https://maps.googleapis.com/maps/api/distancematrix/json?destinations=" + des.getLatLng().latitude + "," + des.getLatLng().longitude + "&origins=" + location.getLatitude() +"," + location.getLongitude() + "&units=metric&travelmode=driving&key=";
         u += "AIzaSyCaYF1IVpeCYRV5H75bWNKE2JmgFOGFK1k";
         HTTPreq httPreq = new HTTPreq();
         httPreq.SetString(u);
         Thread thread = new Thread(httPreq);
         thread.start();
+        String l = httPreq.Get_Distance();
         return httPreq.Get_Distance();
     }
 }
