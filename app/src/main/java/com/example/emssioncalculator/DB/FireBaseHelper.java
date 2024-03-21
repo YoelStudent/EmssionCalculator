@@ -1,5 +1,9 @@
 package com.example.emssioncalculator.DB;
 
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.sleep;
+
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -47,7 +51,7 @@ public class FireBaseHelper {
             }
         });
     }
-    public void UpdateUser(User u)
+    public void UpdateUser(User u,  ProgressDialog pd)
     {
 
 
@@ -64,21 +68,43 @@ public class FireBaseHelper {
                    {
 
                        // Add a new document with a generated ID
-                       database.collection("users")
-                               .document(document.getId()).update(u.toHashMap())
-                               .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                   @Override
-                                   public void onComplete(@NonNull Task<Void> task) {
-                                       if (task.isSuccessful()){
+                       firebaseAuth.getCurrentUser().verifyBeforeUpdateEmail(u.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                           @Override
+                           public void onComplete(@NonNull Task<Void> task) {
+                               if (task.isSuccessful()) {
+                                   boolean flag = false;
+                                   try {
+                                       sleep(20000);
+                                   } catch (InterruptedException e) {
+                                       throw new RuntimeException(e);
+                                   }
+                                   firebaseAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+                                               String currentEmail = firebaseAuth.getCurrentUser().getEmail();
+                                               ;
+                                               database.collection("users")
+                                                       .document(document.getId()).update(u.toHashMap())
+                                                       .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                           @Override
+                                                           public void onComplete(@NonNull Task<Void> task) {
+                                                               if (task.isSuccessful()) {
+                                                                   pd.dismiss();
+                                                               }
+                                                           }
+                                                       })
+                                                       .addOnFailureListener(new OnFailureListener() {
+                                                           @Override
+                                                           public void onFailure(@NonNull Exception e) {
+                                                           }
+                                                       });
+                                           }
+                                       });
 
-                                       }
-                                   }
-                               })
-                               .addOnFailureListener(new OnFailureListener() {
-                                   @Override
-                                   public void onFailure(@NonNull Exception e) {
-                                   }
-                               });
+                               }
+                           }
+                       });
+
                    }
                }
            }

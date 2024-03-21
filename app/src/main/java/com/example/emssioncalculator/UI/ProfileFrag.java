@@ -1,6 +1,7 @@
 package com.example.emssioncalculator.UI;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -64,12 +65,18 @@ public class ProfileFrag extends Fragment {
         }
     }
     private void showProfileUpdateDialog() {
+        ProgressDialog pd = new ProgressDialog(requireContext());
+        pd.setCancelable(false);
+        pd.setTitle("Waiting for email verification");
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.update_alert, null);
         EditText editTextName = dialogView.findViewById(R.id.editTextName);
         EditText editTextAddress = dialogView.findViewById(R.id.editTextAddress);
-        EditText editTextName = dialogView.findViewById(R.id.editTextPass);
+        EditText editTextAge = dialogView.findViewById(R.id.editTextAge);
+        EditText editTextPass = dialogView.findViewById(R.id.editTextPass);
+        EditText editTextEmail = dialogView.findViewById(R.id.editTextEmail);
+
 
         dialogBuilder.setView(dialogView);
 
@@ -81,15 +88,19 @@ public class ProfileFrag extends Fragment {
             @Override
             public void OnGotUser(User user) {
                 editTextName.setText(user.getName());
+                editTextAddress.setText(user.getAddress());
+                editTextPass.setText(user.getPass());
+                editTextEmail.setText(user.getEmail());
+                editTextAge.setText(user.getAge());
+
             }
         });
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
-                String name = editTextName.getText().toString().trim();
-                String address = editTextAddress.getText().toString().trim();
-                //fireBaseHelper.UpdateUser(new);
-//                int age = Integer.parseInt(editTextAge.getText().toString().trim());
+                pd.show();
+                User user = new User(editTextEmail.getText().toString().trim(), editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAddress.getText().toString().trim(), editTextAge.getText().toString().trim());
+                fireBaseHelper.UpdateUser(user, pd);
 
             }
         });
