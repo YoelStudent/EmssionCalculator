@@ -39,13 +39,14 @@
         android:layout_marginTop="8dp"/>
 
     <!-- Other Profile Information -->
-    <TextView
-        android:id="@+id/textViewOtherInfo"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Other information goes here"
-        android:textSize="14sp"
+        android:id="@+id/btnUp"
         android:layout_below="@id/textViewEmail"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"/>
+        android:text="Update"
+        android:layout_marginTop="8dp">
+
+    </Button>
 </RelativeLayout>

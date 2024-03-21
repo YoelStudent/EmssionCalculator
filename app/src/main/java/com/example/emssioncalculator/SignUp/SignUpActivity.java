@@ -1,4 +1,5 @@
 package com.example.emssioncalculator.SignUp;
+import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.LogIn.MainActivity;
 import com.example.emssioncalculator.repository.repository;
 
@@ -60,6 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String BirthDate = edBirthDate.getText().toString();
                 User u = new User(Email, Name,Pass,Address,BirthDate);
                 SignUp s = new SignUp(u,c);
+                FireBaseHelper fb = new FireBaseHelper();
+
                 if(s.Check_User()==0)
                 {
                     Toast.makeText(c, "12312312312", Toast.LENGTH_SHORT).show();

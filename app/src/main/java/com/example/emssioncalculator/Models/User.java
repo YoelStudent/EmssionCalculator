@@ -1,5 +1,8 @@
 package com.example.emssioncalculator.Models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     private String Email;
     private String Pass;
@@ -33,5 +36,16 @@ public class User {
 
     public String getName() {
         return Name;
+    }
+
+    public Map<String, Object> toHashMap()
+    {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", Name);
+        map.put("email", Email);
+        map.put("age", Age);
+        map.put("address", Address);
+        map.put("password", Pass);
+        return map;
     }
 }

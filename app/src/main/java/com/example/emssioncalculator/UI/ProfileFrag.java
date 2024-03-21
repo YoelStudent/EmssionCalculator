@@ -1,5 +1,7 @@
 package com.example.emssioncalculator.UI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 
+import com.example.emssioncalculator.DB.FireBaseHelper;
+import com.example.emssioncalculator.Models.User;
 import com.example.emssioncalculator.R;
 
 /**
@@ -56,11 +63,63 @@ public class ProfileFrag extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    private void showProfileUpdateDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.update_alert, null);
+        EditText editTextName = dialogView.findViewById(R.id.editTextName);
+        EditText editTextAddress = dialogView.findViewById(R.id.editTextAddress);
+        EditText editTextName = dialogView.findViewById(R.id.editTextPass);
+
+        dialogBuilder.setView(dialogView);
+
+
+        dialogBuilder.setTitle("Update Profile");
+        dialogBuilder.setMessage("Please fill in your information:");
+        FireBaseHelper fireBaseHelper = new FireBaseHelper();
+        fireBaseHelper.GetUser(new FireBaseHelper.IGetUser() {
+            @Override
+            public void OnGotUser(User user) {
+                editTextName.setText(user.getName());
+            }
+        });
+        dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do something with the profile information
+                String name = editTextName.getText().toString().trim();
+                String address = editTextAddress.getText().toString().trim();
+                //fireBaseHelper.UpdateUser(new);
+//                int age = Integer.parseInt(editTextAge.getText().toString().trim());
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelled.
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
+
+    Button btnUp;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        btnUp = view.findViewById(R.id.btnUp);
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showProfileUpdateDialog();
+            }
+        });
+        return view;
+
     }
 }
