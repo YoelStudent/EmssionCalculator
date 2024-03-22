@@ -1,15 +1,8 @@
 package com.example.emssioncalculator.UI;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
@@ -22,13 +15,10 @@ import android.widget.TextView;
 
 import com.example.emssioncalculator.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
-public class test extends Fragment implements OnMapReadyCallback {
+public class SearchCar extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +35,7 @@ public class test extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
 
     View fag;
-    public test() {
+    public SearchCar() {
         // Required empty public constructor
     }
 
@@ -58,8 +48,8 @@ public class test extends Fragment implements OnMapReadyCallback {
      * @return A new instance of fragment NewCalc.
      */
     // TODO: Rename and change types and number of parameters
-    public static test newInstance(String param1, String param2) {
-        test fragment = new test();
+    public static SearchCar newInstance(String param1, String param2) {
+        SearchCar fragment = new SearchCar();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,28 +68,20 @@ public class test extends Fragment implements OnMapReadyCallback {
         }
 
     }
-    private TextView textView;
+    private TextView tvDistance;
+    private  View v;
+    private TextView tvCar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_calc, container, false);
 
-        searchViewMap = view.findViewById(R.id.svMap);
-        textView = view.findViewById(R.id.tvDis);
+
+
         return  view;
 
 
-
-    }
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-
-
-
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
 
     }
 }

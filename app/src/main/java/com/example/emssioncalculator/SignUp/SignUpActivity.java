@@ -54,12 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Email = edEmail.getText().toString();
-                String Name = edName.getText().toString();
-                String Pass = edPass.getText().toString();
-                String Address = edAddress.getText().toString();
-                String BirthDate = edBirthDate.getText().toString();
-                User u = new User(Email, Name,Pass,Address,BirthDate);
+                User u = new User(edEmail.getText().toString(),edName.getText().toString(),edPass.getText().toString(),edAddress.getText().toString(), edBirthDate.getText().toString());
+
                 SignUp s = new SignUp(u,c);
                 FireBaseHelper fb = new FireBaseHelper();
 

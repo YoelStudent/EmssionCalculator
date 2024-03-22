@@ -49,4 +49,12 @@
         android:layout_marginTop="8dp">
 
     </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCarSearch"
+        android:layout_below="@id/btnUp"
+        android:layout_centerHorizontal="true"
+        android:text="Car"
+        android:layout_marginTop="8dp"></Button>
 </RelativeLayout>

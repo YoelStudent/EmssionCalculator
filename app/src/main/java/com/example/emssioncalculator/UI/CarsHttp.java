@@ -27,7 +27,7 @@ import java.net.URL;
  * Use the {@link SearchCar#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HTTPreq implements Runnable
+public class CarsHttp implements Runnable
 {
     private String u;
     public TextView tvdis;
@@ -35,20 +35,13 @@ public class HTTPreq implements Runnable
     public void SetString(String url){
         u = url;
     }
-    public static void SetDis(String s)
-    {
-        distance_ret =s;
-    }
 
     public void use()
     {
         Thread thread = new Thread(this);
         thread.start();
     }
-    public void Check(){
-        distance_ret = distance_ret;
-        sleep(100);
-    }
+
     @Override
     public void run()
     {
@@ -77,15 +70,9 @@ public class HTTPreq implements Runnable
             String message = org.apache.commons.io.IOUtils.toString(reader);
 
             JSONObject json = new JSONObject(buffer.toString());
-            JSONArray array = json.getJSONArray("rows");
-            JSONObject row = array.getJSONObject(0);
-            JSONArray ele = row.getJSONArray("elements");
-            JSONObject dis = ele.getJSONObject(0);
-            JSONObject distance = dis.getJSONObject("distance");
+            JSONObject distance = json.getJSONObject("make");
             String distanceString = distance.getString("text");
-            Calc c = new Calc();
-            HTTPreq.SetDis(distanceString);
-            c.final_distance = distanceString;
+
             tvdis.setText(distanceString);
 
         } catch (MalformedURLException e) {

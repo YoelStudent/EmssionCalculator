@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.User;
 import com.example.emssioncalculator.R;
@@ -113,10 +115,41 @@ public class ProfileFrag extends Fragment {
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
     }
+    private void showCarSearch() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.car_search_dialog, null);
+        EditText editTextName = dialogView.findViewById(R.id.editTextName);
+        EditText editTextModel = dialogView.findViewById(R.id.editTextModel);
+        EditText editTextYear = dialogView.findViewById(R.id.editTextYear);
+
+        dialogBuilder.setView(dialogView);
+
+
+        dialogBuilder.setTitle("Search Car");
+        dialogBuilder.setMessage("Please fill in your information:");
+        FireBaseHelper fireBaseHelper = new FireBaseHelper();
+
+        dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do something with the profile information
+                Calc c = new Calc();
+                c.getCar(editTextName.getText().toString(), new TextView(requireContext()), editTextModel.getText().toString(), editTextYear.getText().toString());
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelled.
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
 
     Button btnUp;
 
-
+    Button btnCar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -124,6 +157,13 @@ public class ProfileFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         btnUp = view.findViewById(R.id.btnUp);
+        btnCar = view.findViewById(R.id.btnCarSearch);
+        btnCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCarSearch();
+            }
+        });
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

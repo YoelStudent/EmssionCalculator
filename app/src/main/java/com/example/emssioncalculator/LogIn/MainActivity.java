@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         {
             edEmail.setText(sharedPref.getString("useremail", ""));
             edPass.setText(sharedPref.getString("userpass", ""));
+
+
+
+
             cbRem.setChecked(sharedPref.getBoolean("userrem", false));
         }
 
@@ -90,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("useremail", Email);
                     editor.putString("userpass", Pass);
                     editor.putBoolean("userrem", true);
+
+
                     editor.apply();
                 }
                 else

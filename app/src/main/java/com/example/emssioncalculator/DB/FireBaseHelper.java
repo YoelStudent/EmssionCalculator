@@ -72,34 +72,21 @@ public class FireBaseHelper {
                            @Override
                            public void onComplete(@NonNull Task<Void> task) {
                                if (task.isSuccessful()) {
-                                   boolean flag = false;
-                                   try {
-                                       sleep(20000);
-                                   } catch (InterruptedException e) {
-                                       throw new RuntimeException(e);
-                                   }
-                                   firebaseAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                           @Override
-                                           public void onSuccess(Void aVoid) {
-                                               String currentEmail = firebaseAuth.getCurrentUser().getEmail();
-                                               ;
-                                               database.collection("users")
-                                                       .document(document.getId()).update(u.toHashMap())
-                                                       .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                           @Override
-                                                           public void onComplete(@NonNull Task<Void> task) {
-                                                               if (task.isSuccessful()) {
-                                                                   pd.dismiss();
-                                                               }
-                                                           }
-                                                       })
-                                                       .addOnFailureListener(new OnFailureListener() {
-                                                           @Override
-                                                           public void onFailure(@NonNull Exception e) {
-                                                           }
-                                                       });
-                                           }
-                                       });
+                                   database.collection("users")
+                                           .document(document.getId()).update(u.toHashMap())
+                                           .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                               @Override
+                                               public void onComplete(@NonNull Task<Void> task) {
+                                                   if (task.isSuccessful()) {
+                                                       pd.dismiss();
+                                                   }
+                                               }
+                                           })
+                                           .addOnFailureListener(new OnFailureListener() {
+                                               @Override
+                                               public void onFailure(@NonNull Exception e) {
+                                               }
+                                           });
 
                                }
                            }

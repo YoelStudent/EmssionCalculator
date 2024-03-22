@@ -2,18 +2,8 @@ package com.example.emssioncalculator.UI;
 
 import static android.view.View.VISIBLE;
 
-import static com.example.emssioncalculator.UI.test.MY_PERMISSIONS_REQUEST_LOCATION;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -21,9 +11,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.R;
@@ -42,6 +37,8 @@ import java.util.Arrays;
 
 public class MainPageActivity extends AppCompatActivity
 {
+    private TextView tvDis;
+    int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private Boolean flag = true;
     ImageButton btn_add;
     ImageButton btn_profile;
@@ -58,14 +55,20 @@ public class MainPageActivity extends AppCompatActivity
         if (!Places.isInitialized()){
             Places.initialize(getApplicationContext(), Api_key);
         }
+        tvDis = findViewById(R.id.tvDis);
+
         placesClient = Places.createClient(this);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                findViewById(R.id.fragment_container_view).setVisibility(View.INVISIBLE);
 
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view, SearchCar.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
 
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -91,7 +94,8 @@ public class MainPageActivity extends AppCompatActivity
                                         public void onSuccess(Location location) {
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
-                                                calc.getDistance(location,place);
+                                                calc.getDistance(location,place, tvDis);
+                                                String x = calc.final_distance;
 
                                             }
                                         }
@@ -100,14 +104,15 @@ public class MainPageActivity extends AppCompatActivity
                         }
                     }
                 });
+
+
+
             }
         });
         btn_profile.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-                findViewById(R.id.fragment_container_view).setVisibility(VISIBLE);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
