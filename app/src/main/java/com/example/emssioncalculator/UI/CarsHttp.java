@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
+import com.example.emssioncalculator.DB.FireBaseHelper;
+import com.example.emssioncalculator.Models.Car;
 
 import org.checkerframework.checker.units.qual.C;
 import org.json.JSONArray;
@@ -68,12 +70,24 @@ public class CarsHttp implements Runnable
 
             }
             String message = org.apache.commons.io.IOUtils.toString(reader);
+            //todo check if null
+            if (buffer != null){
+                JSONArray json = new JSONArray(buffer.toString());
+                JSONObject jsonObject = json.getJSONObject(0);
+                Integer mpg = Integer.parseInt(jsonObject.getString("city_mpg").toString());
+                String fuelType =  jsonObject.getString("fuel_type");
+                String make = jsonObject.getString("make").toString();
+                String model = jsonObject.getString("model").toString();
+                String year = jsonObject.getString("year").toString();
 
-            JSONObject json = new JSONObject(buffer.toString());
-            JSONObject distance = json.getJSONObject("make");
-            String distanceString = distance.getString("text");
+                FireBaseHelper  fireBaseHelper = new FireBaseHelper();
 
-            tvdis.setText(distanceString);
+                fireBaseHelper.UpdateCar(new Car(make,model,year,mpg,fuelType));
+
+            }
+
+
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

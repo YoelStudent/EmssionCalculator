@@ -36,7 +36,7 @@ public class Calc {
     public String getCar(String Car,TextView textView,String Model, String Year)
     {
         String u = "https://api.api-ninjas.com/v1/cars?limit=2&make=" + Car + "&model=" + Model + "&year=" + Year + "&X-Api-Key=";
-        u += "q+cvMHvJDjAzXFqKsgO/CQ==CrEFoZl1uOdTt0je";
+        u += "JbRMmeIXk1MJts6VqxnQH08904D2zelSzoO3kMEY";
         CarsHttp httPreq = new CarsHttp();
         httPreq.tvdis = textView;
         httPreq.SetString(u);
