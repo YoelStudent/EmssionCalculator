@@ -1,17 +1,12 @@
 package com.example.emssioncalculator.UI;
 
-import static android.os.SystemClock.sleep;
-
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.Car;
 
-import org.checkerframework.checker.units.qual.C;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +21,7 @@ import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SearchCar#newInstance} factory method to
+ * Use the {@link CalcEmm#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class CarsHttp implements Runnable

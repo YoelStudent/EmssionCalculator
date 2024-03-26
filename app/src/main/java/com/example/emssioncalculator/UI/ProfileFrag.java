@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
+import com.example.emssioncalculator.Models.Car;
 import com.example.emssioncalculator.Models.User;
 import com.example.emssioncalculator.R;
 
@@ -129,6 +130,14 @@ public class ProfileFrag extends Fragment {
         dialogBuilder.setTitle("Search Car");
         dialogBuilder.setMessage("Please fill in your information:");
         FireBaseHelper fireBaseHelper = new FireBaseHelper();
+        fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
+            @Override
+            public void OnGotCar(Car car) {
+                editTextName.setText(car.getMake());
+                editTextModel.setText(car.getModel());
+                editTextYear.setText(car.getYear());
+            }
+        });
 
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {

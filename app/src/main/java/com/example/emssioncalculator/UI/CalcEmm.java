@@ -2,7 +2,6 @@ package com.example.emssioncalculator.UI;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
@@ -16,9 +15,8 @@ import android.widget.TextView;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
-public class SearchCar extends Fragment {
+public class CalcEmm extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +33,7 @@ public class SearchCar extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
 
     View fag;
-    public SearchCar() {
+    public CalcEmm() {
         // Required empty public constructor
     }
 
@@ -48,8 +46,8 @@ public class SearchCar extends Fragment {
      * @return A new instance of fragment NewCalc.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchCar newInstance(String param1, String param2) {
-        SearchCar fragment = new SearchCar();
+    public static CalcEmm newInstance(String param1, String param2) {
+        CalcEmm fragment = new CalcEmm();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

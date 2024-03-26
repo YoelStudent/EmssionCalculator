@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,11 +21,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import com.example.emssioncalculator.Models.Car;
+
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,30 +63,28 @@ public class FireBaseHelper {
     public void GetCar(IGetCar iGetCar){
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
+
         RetrieveDoc(new OnFetch() {
             @Override
             public void OnComplete(Task<QuerySnapshot> task) {
                 String s =firebaseAuth.getCurrentUser().getEmail();
 
-                // Get a reference to the parent document
-                DocumentReference parentDocRef = database.collection("parent_collection").document("parent_document_id");
-
-                // Access the sub-collection
-                CollectionReference subCollectionRef = parentDocRef.collection("sub_collection");
-
-
-
-
-                // Iterate through each document
-                for (QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
                     if(document.getData().get("email").toString().equals(s))
                     {
-                        document.getData().get("car")
-                        Car car = new Car();
-                        iGetCar.OnGotCar(car);
+
+                        database.collection("users")
+                                .document(document.getId()).collection("car").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        DocumentSnapshot q = task.getResult().getDocuments().get(0);
+                                        HashMap hashMap = (HashMap) q.getData();
+                                        iGetCar.OnGotCar(new Car(hashMap.get("make").toString(), hashMap.get("model").toString(), hashMap.get("year").toString(),Integer.parseInt(hashMap.get("mpg").toString()), hashMap.get("fuelType").toString()));
+                                    }
+                                });
                     }
                 }
-
             }
         });
     }
@@ -159,7 +161,8 @@ public class FireBaseHelper {
            }
        });
     }
-    public interface IGetUser{
+    public interface IGetUser
+    {
         void OnGotUser(User user);
     }
     public void GetUser(IGetUser iGetUser){

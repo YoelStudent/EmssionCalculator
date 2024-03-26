@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.SearchCar"
+    tools:context=".UI.CalcEmm"
     android:id="@+id/mainlay"
     android:orientation="vertical">
 
@@ -28,26 +28,5 @@
         android:layout_centerHorizontal="true"
 
         ></TextView>
-    <EditText
-        android:id="@+id/tvCarHeader"
-        android:layout_below="@id/tvDis"
 
-        android:text="CAR:"
-        android:layout_marginLeft="100dp"
-        android:layout_width="160dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-
-        ></EditText>
-    <TextView
-        android:id="@+id/tvCar"
-        android:layout_below="@id/tvCarHeader"
-
-        android:layout_width="160dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-
-        ></TextView>
 </RelativeLayout>

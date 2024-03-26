@@ -2,14 +2,15 @@ package com.example.emssioncalculator.UI;
 
 import static android.os.SystemClock.sleep;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
+import com.example.emssioncalculator.Models.Dis;
 
-import org.checkerframework.checker.units.qual.C;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +25,7 @@ import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SearchCar#newInstance} factory method to
+ * Use the {@link CalcEmm#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class HTTPreq implements Runnable
@@ -45,10 +46,7 @@ public class HTTPreq implements Runnable
         Thread thread = new Thread(this);
         thread.start();
     }
-    public void Check(){
-        distance_ret = distance_ret;
-        sleep(100);
-    }
+
     @Override
     public void run()
     {
@@ -83,10 +81,11 @@ public class HTTPreq implements Runnable
             JSONObject dis = ele.getJSONObject(0);
             JSONObject distance = dis.getJSONObject("distance");
             String distanceString = distance.getString("text");
-            Calc c = new Calc();
-            HTTPreq.SetDis(distanceString);
-            c.final_distance = distanceString;
-            tvdis.setText(distanceString);
+            //tvdis is null when not running in debugger mode, check whether its a problem with the logcat crash report saying shit about ther firestore
+            //or probelms regarding the thread running in the background not getting the tvdis id proper prob the lat, there is no other good way to trasfer the data,
+            // besides maybe sharedpref prob worth checking out
+            Dis dis1 = new Dis();
+            dis1.dis = distanceString;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

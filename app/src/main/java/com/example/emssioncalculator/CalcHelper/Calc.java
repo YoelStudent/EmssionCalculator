@@ -25,12 +25,6 @@ public class Calc {
         httPreq.SetString(u);
         httPreq.use();
 
-//        Thread thread = new Thread(httPreq);
-//        thread.start();
-        String l = httPreq.Get_Distance();
-
-        httPreq.Check();
-        final_distance = l;
         return final_distance;
     }
     public String getCar(String Car,TextView textView,String Model, String Year)

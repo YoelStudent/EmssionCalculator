@@ -2,6 +2,8 @@ package com.example.emssioncalculator.UI;
 
 import static android.view.View.VISIBLE;
 
+import static java.lang.Thread.sleep;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -17,10 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
+import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,7 +39,7 @@ import java.util.Arrays;
 
 public class MainPageActivity extends AppCompatActivity
 {
-    private TextView tvDis;
+    public TextView tvDis;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private Boolean flag = true;
     ImageButton btn_add;
@@ -55,25 +57,26 @@ public class MainPageActivity extends AppCompatActivity
         if (!Places.isInitialized()){
             Places.initialize(getApplicationContext(), Api_key);
         }
-        tvDis = findViewById(R.id.tvDis);
-
         placesClient = Places.createClient(this);
-
+        tvDis = findViewById(R.id.tvDis);
+        tvDis.setText("#4");
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view, SearchCar.class, null)
+                        .replace(R.id.fragment_container_view, CalcEmm.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
-
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
+
+
                 autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,Place.Field.LAT_LNG,Place.Field.NAME));
+
                 autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                     @Override
                     public void onError(@NonNull Status status) {
@@ -95,8 +98,10 @@ public class MainPageActivity extends AppCompatActivity
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
                                                 calc.getDistance(location,place, tvDis);
-                                                String x = calc.final_distance;
-
+//
+                                               //  String x = tvDis.getText().toString().trim();
+//                                                x+= "9";
+                                                tvDis.setText(Dis.dis);
                                             }
                                         }
                                     });
