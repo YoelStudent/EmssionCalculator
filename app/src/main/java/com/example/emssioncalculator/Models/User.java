@@ -7,14 +7,12 @@ public class User {
     private String Email;
     private String Pass;
     private String Name;
-    private String Address;
     private String Age;
-    public User(String Email, String Name,String Pass, String Address, String Age)
+    public User(String Email, String Name,String Pass,  String Age)
     {
         this.Email = Email;
         this.Pass = Pass;
         this.Name = Name;
-        this.Address = Address;
         this.Age = Age;
     }
 
@@ -26,9 +24,6 @@ public class User {
         return Pass;
     }
 
-    public String getAddress() {
-        return Address;
-    }
 
     public String getAge() {
         return Age;
@@ -44,7 +39,6 @@ public class User {
         map.put("name", Name);
         map.put("email", Email);
         map.put("age", Age);
-        map.put("address", Address);
         map.put("password", Pass);
         return map;
     }

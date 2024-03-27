@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.DB.MyDatabaseHelper;
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
 
 public class repository {
@@ -19,8 +20,12 @@ public class repository {
     {
         if(!db.checkExists(user.getEmail()))
         {
-            fb.AddUser(user);
-            db.addItem(user.getName(), user.getEmail(), user.getPass(), user.getAddress(), user.getAge());
+            fb.AddUser(user, new FireBaseHelper.IAddUser() {
+                @Override
+                public void OnAddUser() {
+                    fb.UpdateCar(Cur_User.car);
+                }
+            });
         }
     }
 

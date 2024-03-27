@@ -55,24 +55,13 @@
         android:elevation="2dp"
         android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/editTextAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextNewPassword"
-        android:layout_marginTop="8dp"
-        android:hint="Address"
-        android:textColor="#212121"
-        android:background="#CCFFFFFF"
-        android:padding="10dp"
-        android:elevation="2dp"
-        android:inputType="text" />
+
 
     <EditText
         android:id="@+id/editTextBirthDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextAddress"
+        android:layout_below="@id/editTextNewPassword"
         android:layout_marginTop="8dp"
         android:hint="Birth Date"
         android:textColor="#212121"
@@ -80,22 +69,51 @@
         android:padding="10dp"
         android:elevation="2dp"
         android:inputType="date" />
-
-    <Spinner
-        android:id="@+id/spinnerGender"
+    <EditText
+        android:id="@+id/editTextCarMake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextBirthDate"
         android:layout_marginTop="8dp"
+        android:hint="Car Make"
+        android:textColor="#212121"
         android:background="#CCFFFFFF"
+        android:padding="10dp"
         android:elevation="2dp"
-        android:layout_marginBottom="8dp"/>
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextCarModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextCarMake"
+        android:layout_marginTop="8dp"
+        android:hint="Car Model"
+        android:textColor="#212121"
+        android:background="#CCFFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextCarYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextCarModel"
+        android:layout_marginTop="8dp"
+        android:hint="Car Year"
+        android:textColor="#212121"
+        android:background="#CCFFFFFF"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:inputType="number" />
+
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerGender"
+        android:layout_below="@id/editTextCarYear"
         android:layout_marginTop="16dp"
         android:text="Sign Up"
         android:textColor="#FFFFFF"

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -92,7 +93,7 @@ public class FireBaseHelper {
     {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
-
+        //todo fix car update
         RetrieveDoc(new OnFetch() {
             @Override
             public void OnComplete(Task<QuerySnapshot> task) {
@@ -101,21 +102,13 @@ public class FireBaseHelper {
 
 
                     // Add a new document with a generated ID
-
                     database.collection("users")
-                            .document(document.getId()).collection("car").add(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            .document(document.getId()).collection("car").document().update(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Cur_User.car = c;
                                 }
                             });
-
-
 
 
                 }
@@ -178,15 +171,18 @@ public class FireBaseHelper {
                 {
                     if(document.getData().get("email").toString().equals(s))
                     {
-                        User u = new User(document.getData().get("email").toString(), document.getData().get("name").toString(), document.getData().get("password").toString(), document.getData().get("address").toString(),document.getData().get("age").toString());
+                        User u = new User(document.getData().get("email").toString(), document.getData().get("name").toString(), document.getData().get("password").toString(),document.getData().get("age").toString());
                         iGetUser.OnGotUser(u);
                     }
                 }
             }
         });
     }
-
-    public void AddUser(User u){
+    public interface IAddUser
+    {
+        void OnAddUser();
+    }
+    public void AddUser(User u, IAddUser iAddUser){
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
 
@@ -202,6 +198,7 @@ public class FireBaseHelper {
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
+                                    iAddUser.OnAddUser();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.location.Location;
 import android.widget.TextView;
 
+import com.example.emssioncalculator.Models.Car_Lock;
 import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.UI.CarsHttp;
 import com.example.emssioncalculator.UI.HTTPreq;
@@ -34,19 +35,25 @@ public class Calc {
                 throw new RuntimeException(e);
             }
         }
+        Dis.lock = true;
+
         return final_distance;
     }
-    public String getCar(String Car,TextView textView,String Model, String Year)
+    public String getCar(String Car,String Model, String Year)
     {
         String u = "https://api.api-ninjas.com/v1/cars?limit=2&make=" + Car + "&model=" + Model + "&year=" + Year + "&X-Api-Key=";
         u += "JbRMmeIXk1MJts6VqxnQH08904D2zelSzoO3kMEY";
         CarsHttp httPreq = new CarsHttp();
-        httPreq.tvdis = textView;
         httPreq.SetString(u);
         httPreq.use();
-
-        String l = httPreq.Get_Distance();
-
+        while (Car_Lock.flag){
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Car_Lock.flag = true;
         return final_distance;
     }
 }

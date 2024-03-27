@@ -1,6 +1,9 @@
 package com.example.emssioncalculator.SignUp;
+import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.LogIn.MainActivity;
+import com.example.emssioncalculator.Models.Car;
+import com.example.emssioncalculator.Models.Car_Lock;
 import com.example.emssioncalculator.repository.repository;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 public class SignUpActivity extends AppCompatActivity {
     private TextView tvSignIn;
     private Button btnSignUp;
-    private EditText edEmail, edName, edPass, edAddress, edBirthDate;
+    private EditText edEmail, edName, edPass, edBirthDate, edCarMake,edCarModel, edCarYear;
 
     private repository repository;
     @Override
@@ -36,9 +39,13 @@ public class SignUpActivity extends AppCompatActivity {
         edEmail = findViewById(R.id.editTextEmail);
         edName = findViewById(R.id.editTextFullName);
         edPass = findViewById(R.id.editTextNewPassword);
-        edAddress = findViewById(R.id.editTextAddress);
         edBirthDate = findViewById(R.id.editTextBirthDate);
+        edCarMake = findViewById(R.id.editTextCarMake);
+        edCarModel = findViewById(R.id.editTextCarModel);
+        edCarYear = findViewById(R.id.editTextCarYear);
+
         tvSignIn = findViewById(R.id.tvSignIn);
+
         btnSignUp = findViewById(R.id.btnSignUp);
 
         repository = new repository(this);
@@ -53,21 +60,28 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User u = new User(edEmail.getText().toString(),edName.getText().toString(),edPass.getText().toString(),edAddress.getText().toString(), edBirthDate.getText().toString());
+                User u = new User(edEmail.getText().toString(),edName.getText().toString(),edPass.getText().toString(), edBirthDate.getText().toString());
+                Calc calc = new Calc();
+
 
                 SignUp s = new SignUp(u,c);
                 FireBaseHelper fb = new FireBaseHelper();
-
-                if(s.Check_User()==0)
-                {
-                    Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
-                    repository.Add_User(u);
+                calc.getCar(edCarMake.getText().toString(), edCarModel.getText().toString(), edCarYear.getText().toString());
+                if (!Car_Lock.valid_car){
+                    Toast.makeText(c, "invalid car", Toast.LENGTH_SHORT).show();
 
                 }
+                else {
+                    Toast.makeText(c, "valid car", Toast.LENGTH_SHORT).show();
+                    if(s.Check_User()==0)
+                    {
+                        Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
+                        repository.Add_User(u);
 
-
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                startActivity(intent);
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
             }
         });
     }

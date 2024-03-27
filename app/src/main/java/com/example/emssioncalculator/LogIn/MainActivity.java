@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.emssioncalculator.DB.FireBaseHelper;
+import com.example.emssioncalculator.Models.Car;
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.R;
 import com.example.emssioncalculator.DB.MyDatabaseHelper;
 import com.example.emssioncalculator.SignUp.SignUpActivity;
@@ -107,8 +110,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
-                            startActivity(intent);
+                            Cur_User.email = Email;
+                            FireBaseHelper fireBaseHelper= new FireBaseHelper();
+                            fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
+                                @Override
+                                public void OnGotCar(Car car) {
+                                    Cur_User.car = car;
+                                    Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Authentication failed.",

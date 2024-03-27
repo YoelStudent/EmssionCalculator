@@ -14,10 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.Car;
+import com.example.emssioncalculator.Models.Car_Lock;
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
 import com.example.emssioncalculator.R;
 
@@ -91,7 +94,6 @@ public class ProfileFrag extends Fragment {
             @Override
             public void OnGotUser(User user) {
                 editTextName.setText(user.getName());
-                editTextAddress.setText(user.getAddress());
                 editTextPass.setText(user.getPass());
                 editTextEmail.setText(user.getEmail());
                 editTextAge.setText(user.getAge());
@@ -102,7 +104,7 @@ public class ProfileFrag extends Fragment {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
                 pd.show();
-                User user = new User(editTextEmail.getText().toString().trim(), editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAddress.getText().toString().trim(), editTextAge.getText().toString().trim());
+                User user = new User(editTextEmail.getText().toString().trim(), editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAge.getText().toString().trim());
                 fireBaseHelper.UpdateUser(user, pd);
 
             }
@@ -143,7 +145,18 @@ public class ProfileFrag extends Fragment {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
                 Calc c = new Calc();
-                c.getCar(editTextName.getText().toString(), new TextView(requireContext()), editTextModel.getText().toString(), editTextYear.getText().toString());
+                c.getCar(editTextName.getText().toString(), editTextModel.getText().toString(), editTextYear.getText().toString());
+                FireBaseHelper  fireBaseHelper = new FireBaseHelper();
+                if (Car_Lock.valid_car)
+                {
+                    fireBaseHelper.UpdateCar(Cur_User.car);
+                }
+                else {
+                    Toast.makeText(requireContext(), "invalid car", Toast.LENGTH_SHORT).show();
+                    editTextName.setText(Cur_User.car.getMake());
+                    editTextModel.setText(Cur_User.car.getModel());
+                    editTextYear.setText(Cur_User.car.getYear());
+                }
             }
         });
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

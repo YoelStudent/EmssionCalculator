@@ -50,7 +50,7 @@ public class SignUp {
 
     public static boolean isValidAge(int age) {
         // Check if age is between 16 and 100
-        return age > 16 && age < 100;
+        return age >= 16 && age <= 100;
     }
 
     public void showToast(String message) {

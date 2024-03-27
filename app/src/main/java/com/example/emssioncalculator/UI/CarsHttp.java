@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.Car;
+import com.example.emssioncalculator.Models.Car_Lock;
+import com.example.emssioncalculator.Models.Cur_User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +29,6 @@ import java.net.URL;
 public class CarsHttp implements Runnable
 {
     private String u;
-    public TextView tvdis;
     public static String distance_ret = "";
     public void SetString(String url){
         u = url;
@@ -75,10 +76,15 @@ public class CarsHttp implements Runnable
                 String model = jsonObject.getString("model").toString();
                 String year = jsonObject.getString("year").toString();
 
-                FireBaseHelper  fireBaseHelper = new FireBaseHelper();
+                Cur_User.car = new Car(make,model,year,mpg,fuelType);
+                Car_Lock.flag = false;
+                Car_Lock.valid_car = true;
 
-                fireBaseHelper.UpdateCar(new Car(make,model,year,mpg,fuelType));
-
+            }
+            else
+            {
+                Car_Lock.flag = false;
+                Car_Lock.valid_car =false;
             }
 
 

@@ -7,12 +7,14 @@ import static java.lang.Thread.sleep;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.Car;
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.common.api.Status;
@@ -62,6 +65,7 @@ public class MainPageActivity extends AppCompatActivity
         placesClient = Places.createClient(this);
         tvDis = findViewById(R.id.tvDis);
         tvDis.setText("#4");
+
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +90,6 @@ public class MainPageActivity extends AppCompatActivity
 
                     @Override
                     public void onPlaceSelected(@NonNull Place place) {
-                        final LatLng lat_lng = place.getLatLng();
                         if (checkLocationPermission()) {
                             Calc calc = new Calc();
 
@@ -106,27 +109,23 @@ public class MainPageActivity extends AppCompatActivity
                                                 tvDis.setText(Dis.dis);
                                                 String d = Dis.dis.substring(0, Dis.dis.length()-2);
                                                 tvDis.setText(d);
-                                                FireBaseHelper fireBaseHelper = new FireBaseHelper();
-                                                fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
-                                                    @Override
-                                                    public void OnGotCar(Car car) {
-                                                        double kpl = 0.425143707 * car.getMpg();
-                                                        double lpk = 1 / kpl;
-                                                        double fuel_con = lpk * Integer.parseInt(d.trim());
-                                                        double Gasoline = 2.3;
-                                                        double Diesel = 2.7;
-                                                        double res = 0;
-                                                        if (car.getFuelType().equals("diesel"))
-                                                        {
-                                                            res = fuel_con * Diesel;
-                                                        }
-                                                        else{
-                                                            res = Gasoline * fuel_con;
-                                                        }
-                                                        String result = String.valueOf(res);
-                                                        tvDis.setText(result);
-                                                    }
-                                                });
+
+                                                double kpl = 0.425143707 * Cur_User.car.getMpg();
+                                                double lpk = 1 / kpl;
+                                                double fuel_con = lpk * Integer.parseInt(d.trim());
+                                                double Gasoline = 2.3;
+                                                double Diesel = 2.7;
+                                                double res = 0;
+                                                if (Cur_User.car.getFuelType().equals("diesel"))
+                                                {
+                                                    res = fuel_con * Diesel;
+                                                }
+                                                else{
+                                                    res = Gasoline * fuel_con;
+                                                }
+                                                String result = String.valueOf(res);
+                                                tvDis.setText(result);
+
 
                                             }
                                         }
