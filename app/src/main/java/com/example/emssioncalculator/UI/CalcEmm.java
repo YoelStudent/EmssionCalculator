@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.emssioncalculator.Models.Cur_User;
+import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
@@ -66,17 +68,47 @@ public class CalcEmm extends Fragment {
         }
 
     }
+    TextView tvTrees;
+    TextView tvDis;
+
     private TextView tvDistance;
     private  View v;
     private TextView tvCar;
+    public void Show_Res(View view){
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_calc, container, false);
+        tvDis = view.findViewById(R.id.tvDis);
+        tvTrees = view.findViewById(R.id.tvTrees);
+
+        String d = Dis.dis.substring(0, Dis.dis.length()-3);
 
 
-
+        double kpl = 0.425143707 * Cur_User.car.getMpg();
+        double lpk = 1 / kpl;
+        double fuel_con = lpk * Integer.parseInt(d.trim());
+        double Gasoline = 2.3;
+        double Diesel = 2.7;
+        double res = 0;
+        if (Cur_User.car.getFuelType().equals("diesel"))
+        {
+            res = fuel_con * Diesel;
+        }
+        else{
+            res = Gasoline * fuel_con;
+        }
+        String result = String.valueOf(res);
+        tvDis.setText(result);
+        if (res/25 <1){
+            tvTrees.setText("1 tree");
+        }
+        else{
+            tvTrees.setText(String.valueOf(Math.round(res/25)) + " trees");
+        }
         return  view;
 
 

@@ -45,7 +45,6 @@ import java.util.Arrays;
 
 public class MainPageActivity extends AppCompatActivity
 {
-    public TextView tvDis;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     ImageButton btn_add;
     ImageButton btn_profile;
@@ -63,19 +62,13 @@ public class MainPageActivity extends AppCompatActivity
             Places.initialize(getApplicationContext(), Api_key);
         }
         placesClient = Places.createClient(this);
-        tvDis = findViewById(R.id.tvDis);
-        tvDis.setText("#4");
+
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view, CalcEmm.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("name") // Name can be null
-                        .commit();
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
@@ -101,32 +94,13 @@ public class MainPageActivity extends AppCompatActivity
                                         public void onSuccess(Location location) {
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
-                                                calc.getDistance(location,place, tvDis);
-//
-                                               //  String x = tvDis.getText().toString().trim();
-//                                                x+= "9";
+                                                calc.getDistance(location,place);
 
-                                                tvDis.setText(Dis.dis);
-                                                String d = Dis.dis.substring(0, Dis.dis.length()-2);
-                                                tvDis.setText(d);
-
-                                                double kpl = 0.425143707 * Cur_User.car.getMpg();
-                                                double lpk = 1 / kpl;
-                                                double fuel_con = lpk * Integer.parseInt(d.trim());
-                                                double Gasoline = 2.3;
-                                                double Diesel = 2.7;
-                                                double res = 0;
-                                                if (Cur_User.car.getFuelType().equals("diesel"))
-                                                {
-                                                    res = fuel_con * Diesel;
-                                                }
-                                                else{
-                                                    res = Gasoline * fuel_con;
-                                                }
-                                                String result = String.valueOf(res);
-                                                tvDis.setText(result);
-
-
+                                                fragmentManager.beginTransaction()
+                                                        .replace(R.id.fragment_container_view, CalcEmm.class, null)
+                                                        .setReorderingAllowed(true)
+                                                        .addToBackStack("name") // Name can be null
+                                                        .commit();
                                             }
                                         }
                                     });

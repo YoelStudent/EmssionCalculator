@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        android:id="@+id/autocomplete_fragment">
-
-
+        android:id="@+id/autocomplete_fragment"
+        android:visibility="invisible">
     </androidx.fragment.app.FragmentContainerView>
     <androidx.fragment.app.FragmentContainerView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,12 +22,8 @@
         android:layout_height="match_parent"
         />
     <!-- Bottom Navigation Bar -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDis">
 
-    </TextView>
+
     <LinearLayout
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
