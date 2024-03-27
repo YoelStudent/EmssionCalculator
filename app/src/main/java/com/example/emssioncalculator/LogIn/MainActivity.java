@@ -54,11 +54,8 @@ public class MainActivity extends AppCompatActivity {
         {
             edEmail.setText(sharedPref.getString("useremail", ""));
             edPass.setText(sharedPref.getString("userpass", ""));
-
-
-
-
             cbRem.setChecked(sharedPref.getBoolean("userrem", false));
+
         }
 
         cbRem.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
                             Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
                             startActivity(intent);
                         } else {

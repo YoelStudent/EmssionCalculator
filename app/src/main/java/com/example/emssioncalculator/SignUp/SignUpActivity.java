@@ -24,8 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView tvSignIn;
     private Button btnSignUp;
     private EditText edEmail, edName, edPass, edAddress, edBirthDate;
-    DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
+
     private repository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +60,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(s.Check_User()==0)
                 {
-                    Toast.makeText(c, "12312312312", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
                     repository.Add_User(u);
 
                 }
-                Toast.makeText(c, "asdasdasdasd", Toast.LENGTH_SHORT).show();
-
-
-
 
 
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

@@ -190,7 +190,7 @@ public class FireBaseHelper {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
 
-
+        //todo add firebase auth mail auth
         firebaseAuth.createUserWithEmailAndPassword(u.getEmail(), u.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -207,6 +207,7 @@ public class FireBaseHelper {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+
                                 }
                             });
 

@@ -1,11 +1,14 @@
 package com.example.emssioncalculator.CalcHelper;
 
+import static java.lang.Thread.sleep;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.widget.TextView;
 
+import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.UI.CarsHttp;
 import com.example.emssioncalculator.UI.HTTPreq;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -17,14 +20,20 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 public class Calc {
     public static String final_distance = "";
-    public static String getDistance(Location location, Place des, TextView textView) {
+    public String getDistance(Location location, Place des, TextView textView) {
         String u = "  https://maps.googleapis.com/maps/api/distancematrix/json?destinations=" + des.getLatLng().latitude + "," + des.getLatLng().longitude + "&origins=" + location.getLatitude() +"," + location.getLongitude() + "&units=metric&travelmode=driving&key=";
         u += "AIzaSyCaYF1IVpeCYRV5H75bWNKE2JmgFOGFK1k";
         HTTPreq httPreq = new HTTPreq();
         httPreq.tvdis = textView;
         httPreq.SetString(u);
         httPreq.use();
-
+        while (Dis.lock){
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return final_distance;
     }
     public String getCar(String Car,TextView textView,String Model, String Year)

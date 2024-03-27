@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
+import com.example.emssioncalculator.DB.FireBaseHelper;
+import com.example.emssioncalculator.Models.Car;
 import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.common.api.Status;
@@ -41,7 +44,6 @@ public class MainPageActivity extends AppCompatActivity
 {
     public TextView tvDis;
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private Boolean flag = true;
     ImageButton btn_add;
     ImageButton btn_profile;
     PlacesClient placesClient;
@@ -92,7 +94,6 @@ public class MainPageActivity extends AppCompatActivity
                             fusedLocationClient.getLastLocation()
                                     .addOnSuccessListener(autocompleteSupportFragment.requireActivity(), new OnSuccessListener<Location>() {
                                         PlacesClient placesClient;
-                                        @SuppressLint("MissingPermission")
                                         @Override
                                         public void onSuccess(Location location) {
                                             // Got last known location. In some rare situations this can be null.
@@ -101,7 +102,32 @@ public class MainPageActivity extends AppCompatActivity
 //
                                                //  String x = tvDis.getText().toString().trim();
 //                                                x+= "9";
+
                                                 tvDis.setText(Dis.dis);
+                                                String d = Dis.dis.substring(0, Dis.dis.length()-2);
+                                                tvDis.setText(d);
+                                                FireBaseHelper fireBaseHelper = new FireBaseHelper();
+                                                fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
+                                                    @Override
+                                                    public void OnGotCar(Car car) {
+                                                        double kpl = 0.425143707 * car.getMpg();
+                                                        double lpk = 1 / kpl;
+                                                        double fuel_con = lpk * Integer.parseInt(d.trim());
+                                                        double Gasoline = 2.3;
+                                                        double Diesel = 2.7;
+                                                        double res = 0;
+                                                        if (car.getFuelType().equals("diesel"))
+                                                        {
+                                                            res = fuel_con * Diesel;
+                                                        }
+                                                        else{
+                                                            res = Gasoline * fuel_con;
+                                                        }
+                                                        String result = String.valueOf(res);
+                                                        tvDis.setText(result);
+                                                    }
+                                                });
+
                                             }
                                         }
                                     });

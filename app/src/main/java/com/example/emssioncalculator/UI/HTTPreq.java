@@ -85,8 +85,8 @@ public class HTTPreq implements Runnable
             //or probelms regarding the thread running in the background not getting the tvdis id proper prob the lat, there is no other good way to trasfer the data,
             // besides maybe sharedpref prob worth checking out
             Dis dis1 = new Dis();
-            dis1.dis = distanceString;
-
+            Dis.dis = distanceString;
+            Dis.lock = false;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
