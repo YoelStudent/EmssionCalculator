@@ -18,15 +18,14 @@ public class repository {
     }
     public void Add_User(User user)
     {
-        if(!db.checkExists(user.getEmail()))
-        {
-            fb.AddUser(user, new FireBaseHelper.IAddUser() {
-                @Override
-                public void OnAddUser() {
-                    fb.UpdateCar(Cur_User.car);
-                }
-            });
-        }
+       //TODO CHECK IF EMAIL UNIQUE
+        fb.AddUser(user, new FireBaseHelper.IAddUser() {
+            @Override
+            public void OnAddUser() {
+                fb.UpdateCar(Cur_User.car);
+            }
+        });
+
     }
 
 }

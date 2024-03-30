@@ -21,18 +21,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextEmail"
         android:hint="Email"/>
-    <EditText
-        android:id="@+id/editTextAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPass"
-        android:hint="Address"/>
+
 
     <EditText
         android:id="@+id/editTextAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextAddress"
+        android:layout_below="@id/editTextPass"
         android:hint="Age"
 
         />

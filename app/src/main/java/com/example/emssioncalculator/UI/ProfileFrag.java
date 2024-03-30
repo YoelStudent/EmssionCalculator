@@ -78,7 +78,6 @@ public class ProfileFrag extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.update_alert, null);
         EditText editTextName = dialogView.findViewById(R.id.editTextName);
-        EditText editTextAddress = dialogView.findViewById(R.id.editTextAddress);
         EditText editTextAge = dialogView.findViewById(R.id.editTextAge);
         EditText editTextPass = dialogView.findViewById(R.id.editTextPass);
         EditText editTextEmail = dialogView.findViewById(R.id.editTextEmail);
@@ -145,7 +144,9 @@ public class ProfileFrag extends Fragment {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
                 Calc c = new Calc();
+
                 c.getCar(editTextName.getText().toString(), editTextModel.getText().toString(), editTextYear.getText().toString());
+
                 FireBaseHelper  fireBaseHelper = new FireBaseHelper();
                 if (Car_Lock.valid_car)
                 {

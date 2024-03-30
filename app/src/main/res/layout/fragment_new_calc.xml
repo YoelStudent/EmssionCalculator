@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".UI.CalcEmm"
     android:id="@+id/mainlay"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/wallpaper_firewatch"
+    >
     <TextView
         android:id="@+id/tvDistance"
         android:layout_width="160dp"
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTrees"
         android:layout_centerHorizontal="true"
+        android:id="@+id/btnSave"
         android:hint="save">
 
     </Button>

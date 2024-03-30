@@ -1,4 +1,4 @@
-package com.example.emssioncalculator.UI;
+package com.example.emssioncalculator.Http;
 
 import static android.os.SystemClock.sleep;
 
@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
+import com.example.emssioncalculator.Models.Car_Lock;
 import com.example.emssioncalculator.Models.Dis;
+import com.example.emssioncalculator.UI.CalcEmm;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,14 +33,8 @@ import java.net.URL;
 public class HTTPreq implements Runnable
 {
     private String u;
-    public TextView tvdis;
-    public static String distance_ret = "";
     public void SetString(String url){
         u = url;
-    }
-    public static void SetDis(String s)
-    {
-        distance_ret =s;
     }
 
     public void use()
@@ -74,19 +70,28 @@ public class HTTPreq implements Runnable
             }
             String message = org.apache.commons.io.IOUtils.toString(reader);
 
-            JSONObject json = new JSONObject(buffer.toString());
-            JSONArray array = json.getJSONArray("rows");
-            JSONObject row = array.getJSONObject(0);
-            JSONArray ele = row.getJSONArray("elements");
-            JSONObject dis = ele.getJSONObject(0);
-            JSONObject distance = dis.getJSONObject("distance");
-            String distanceString = distance.getString("text");
-            //tvdis is null when not running in debugger mode, check whether its a problem with the logcat crash report saying shit about ther firestore
-            //or probelms regarding the thread running in the background not getting the tvdis id proper prob the lat, there is no other good way to trasfer the data,
-            // besides maybe sharedpref prob worth checking out
-            Dis dis1 = new Dis();
-            Dis.dis = distanceString;
-            Dis.lock = false;
+
+                JSONObject json = new JSONObject(buffer.toString());
+                JSONArray array = json.getJSONArray("rows");
+                JSONObject row = array.getJSONObject(0);
+                JSONArray ele = row.getJSONArray("elements");
+                JSONObject dis = ele.getJSONObject(0);
+                String status = dis.getString("status");
+                if (status.equals("OK")){
+
+                    JSONObject distance = dis.getJSONObject("distance");
+                    String distanceString = distance.getString("text");
+
+
+                    Dis.dis = distanceString;
+                    Dis.lock = false;
+                    Dis.valid_place = true;
+                }
+                else
+                {
+                    Dis.lock = false;
+                    Dis.valid_place =false;
+                }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -95,10 +100,7 @@ public class HTTPreq implements Runnable
             throw new RuntimeException(e);
         }
     }
-    public String Get_Distance()
-    {
-        return distance_ret;
-    }
+
 
 
 }

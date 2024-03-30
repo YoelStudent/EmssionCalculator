@@ -8,15 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.emssioncalculator.DB.MyDatabaseHelper;
 import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.Dis;
 import com.example.emssioncalculator.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
+
+import java.util.Date;
 
 public class CalcEmm extends Fragment {
 
@@ -70,7 +74,7 @@ public class CalcEmm extends Fragment {
     }
     TextView tvTrees;
     TextView tvDis;
-
+    Button btnSave;
     private TextView tvDistance;
     private  View v;
     private TextView tvCar;
@@ -84,13 +88,14 @@ public class CalcEmm extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_calc, container, false);
         tvDis = view.findViewById(R.id.tvDis);
         tvTrees = view.findViewById(R.id.tvTrees);
-
+        btnSave = view.findViewById(R.id.btnSave);
         String d = Dis.dis.substring(0, Dis.dis.length()-3);
 
 
         double kpl = 0.425143707 * Cur_User.car.getMpg();
         double lpk = 1 / kpl;
-        double fuel_con = lpk * Integer.parseInt(d.trim());
+        d = d.replace(",","");
+        double fuel_con = lpk * Math.floor(Double.parseDouble(d));
         double Gasoline = 2.3;
         double Diesel = 2.7;
         double res = 0;
@@ -101,14 +106,27 @@ public class CalcEmm extends Fragment {
         else{
             res = Gasoline * fuel_con;
         }
+        res = Math.floor(res);
         String result = String.valueOf(res);
         tvDis.setText(result);
+        String trees = String.valueOf(Math.round(res/25));
         if (res/25 <1){
             tvTrees.setText("1 tree");
         }
         else{
-            tvTrees.setText(String.valueOf(Math.round(res/25)) + " trees");
+            tvTrees.setText(trees + " trees");
         }
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(requireContext());
+                Date d1 = new Date();
+                String s = d1.toString();
+                myDatabaseHelper.addItem("0",result,trees,s,"");
+            }
+
+        });
         return  view;
 
 

@@ -48,6 +48,7 @@ public class MainPageActivity extends AppCompatActivity
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     ImageButton btn_add;
     ImageButton btn_profile;
+    ImageButton btn_history;
     PlacesClient placesClient;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -58,6 +59,7 @@ public class MainPageActivity extends AppCompatActivity
         String Api_key = "AIzaSyAzIwZsPI9AmYBSXxt1edsHUjk9QJ8_xMo";
         btn_add = findViewById(R.id.btnCalculateRoute);
         btn_profile = findViewById(R.id.btnAccount);
+        btn_history = findViewById(R.id.btnHistory);
         if (!Places.isInitialized()){
             Places.initialize(getApplicationContext(), Api_key);
         }
@@ -68,6 +70,12 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
+
+                if (fragmentManager.findFragmentById(R.id.fragment_container_view) != null)
+                {
+                    fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.fragment_container_view)).commit();
+
+                }
 
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -95,12 +103,18 @@ public class MainPageActivity extends AppCompatActivity
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
                                                 calc.getDistance(location,place);
+                                                if (Dis.valid_place)
+                                                {
+                                                    fragmentManager.beginTransaction()
+                                                            .replace(R.id.fragment_container_view, CalcEmm.class, null)
+                                                            .setReorderingAllowed(true)
+                                                            .addToBackStack("name") // Name can be null
+                                                            .commit();
+                                                }
+                                                else{
+                                                    Toast.makeText(MainPageActivity.this, "invalid place", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                fragmentManager.beginTransaction()
-                                                        .replace(R.id.fragment_container_view, CalcEmm.class, null)
-                                                        .setReorderingAllowed(true)
-                                                        .addToBackStack("name") // Name can be null
-                                                        .commit();
                                             }
                                         }
                                     });
@@ -127,13 +141,26 @@ public class MainPageActivity extends AppCompatActivity
 
             }
         });
+        btn_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view, History_Frag.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+
+            }
+        });
 
     }
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
@@ -156,8 +183,6 @@ public class MainPageActivity extends AppCompatActivity
                         })
                         .create()
                         .show();
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(MainPageActivity.this,
