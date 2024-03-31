@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 
 import android.app.ProgressDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -28,6 +29,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import com.example.emssioncalculator.Models.Car;
+
+import org.w3c.dom.Document;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -72,8 +75,7 @@ public class FireBaseHelper {
 
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
-                    if(document.getData().get("email").toString().equals(s))
-                    {
+                    if(document.getData().get("email").toString().equals(s)) {
 
                         database.collection("users")
                                 .document(document.getId()).collection("car").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -81,10 +83,12 @@ public class FireBaseHelper {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         DocumentSnapshot q = task.getResult().getDocuments().get(0);
                                         HashMap hashMap = (HashMap) q.getData();
-                                        iGetCar.OnGotCar(new Car(hashMap.get("make").toString(), hashMap.get("model").toString(), hashMap.get("year").toString(),Integer.parseInt(hashMap.get("mpg").toString()), hashMap.get("fuelType").toString()));
+                                        iGetCar.OnGotCar(new Car(hashMap.get("make").toString(), hashMap.get("model").toString(), hashMap.get("year").toString(), Integer.parseInt(hashMap.get("mpg").toString()), hashMap.get("fuelType").toString()));
                                     }
                                 });
+//
                     }
+
                 }
             }
         });
@@ -102,13 +106,25 @@ public class FireBaseHelper {
 
 
                     // Add a new document with a generated ID
-                    database.collection("users")
-                            .document(document.getId()).collection("car").document().update(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Cur_User.car = c;
-                                }
-                            });
+                    if (document.getData().get("email").toString().equals(Cur_User.email))
+                    {
+                        database.collection("users").document(document.getId()).collection("car").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                database.collection("users").document(document.getId()).collection("car").document(task.getResult().getDocuments().get(0).getId()).update(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            String s = "gaynigger";
+                                        }
+                                    }
+
+                                });
+                            }
+                        });
+
+                    }
+
 
 
                 }

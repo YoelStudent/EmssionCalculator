@@ -68,25 +68,37 @@ public class CarsHttp implements Runnable
             }
             String message = org.apache.commons.io.IOUtils.toString(reader);
             //todo check if null
-            if (buffer != null){
+            if (buffer!=null){
                 JSONArray json = new JSONArray(buffer.toString());
-                JSONObject jsonObject = json.getJSONObject(0);
-                Integer mpg = Integer.parseInt(jsonObject.getString("city_mpg").toString());
-                String fuelType =  jsonObject.getString("fuel_type");
-                String make = jsonObject.getString("make").toString();
-                String model = jsonObject.getString("model").toString();
-                String year = jsonObject.getString("year").toString();
+                if (!json.toString().equals("[]"))
+                {
+                    JSONObject jsonObject = json.getJSONObject(0);
 
-                Cur_User.car = new Car(make,model,year,mpg,fuelType);
-                Car_Lock.flag = false;
-                Car_Lock.valid_car = true;
+                    Integer mpg = Integer.parseInt(jsonObject.getString("city_mpg").toString());
+                    String fuelType =  jsonObject.getString("fuel_type");
+                    String make = jsonObject.getString("make").toString();
+                    String model = jsonObject.getString("model").toString();
+                    String year = jsonObject.getString("year").toString();
+
+                    Cur_User.car = new Car(make,model,year,mpg,fuelType);
+//                while (Cur_User.car.getMake().equals(make) && Cur_User.car.getModel().equals(model) && Cur_User.car.getYear().equals(year)){
+//
+//                }
+                    //Cur_User.car.make = make;
+                    //Cur_User.car.year = year;
+                    //Cur_User.car.model = model;
+
+                    Car_Lock.flag = false;
+                    Car_Lock.valid_car = true;
+                }
+                else
+                {
+                    Car_Lock.flag = false;
+                    Car_Lock.valid_car =false;
+                }
 
             }
-            else
-            {
-                Car_Lock.flag = false;
-                Car_Lock.valid_car =false;
-            }
+
 
 
 

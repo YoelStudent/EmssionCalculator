@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Car {
-    private String make;
-    private String model;
-    private String year;
-    private int mpg;
-    private String fuelType;
+    public String make;
+    public String model;
+    public String year;
+    public int mpg;
+    public String fuelType;
 
     // Constructor
     public Car(String make, String model, String year, int mpg, String fuelType) {

@@ -80,9 +80,8 @@ public class ProfileFrag extends Fragment {
         EditText editTextName = dialogView.findViewById(R.id.editTextName);
         EditText editTextAge = dialogView.findViewById(R.id.editTextAge);
         EditText editTextPass = dialogView.findViewById(R.id.editTextPass);
-        EditText editTextEmail = dialogView.findViewById(R.id.editTextEmail);
-
-
+        TextView textView = dialogView.findViewById(R.id.editTextEmail);
+        textView.setText(Cur_User.email);
         dialogBuilder.setView(dialogView);
 
 
@@ -94,7 +93,6 @@ public class ProfileFrag extends Fragment {
             public void OnGotUser(User user) {
                 editTextName.setText(user.getName());
                 editTextPass.setText(user.getPass());
-                editTextEmail.setText(user.getEmail());
                 editTextAge.setText(user.getAge());
 
             }
@@ -103,7 +101,7 @@ public class ProfileFrag extends Fragment {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
                 pd.show();
-                User user = new User(editTextEmail.getText().toString().trim(), editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAge.getText().toString().trim());
+                User user = new User(Cur_User.email, editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAge.getText().toString().trim());
                 fireBaseHelper.UpdateUser(user, pd);
 
             }
@@ -131,14 +129,17 @@ public class ProfileFrag extends Fragment {
         dialogBuilder.setTitle("Search Car");
         dialogBuilder.setMessage("Please fill in your information:");
         FireBaseHelper fireBaseHelper = new FireBaseHelper();
-        fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
-            @Override
-            public void OnGotCar(Car car) {
-                editTextName.setText(car.getMake());
-                editTextModel.setText(car.getModel());
-                editTextYear.setText(car.getYear());
-            }
-        });
+//        fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
+//            @Override
+//            public void OnGotCar(Car car) {
+//                editTextName.setText(car.getMake());
+//                editTextModel.setText(car.getModel());
+//                editTextYear.setText(car.getYear());
+//            }
+//        });
+        editTextName.setText(Cur_User.car.getMake());
+        editTextModel.setText(Cur_User.car.getModel());
+        editTextYear.setText(Cur_User.car.getYear());
 
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -148,9 +149,16 @@ public class ProfileFrag extends Fragment {
                 c.getCar(editTextName.getText().toString(), editTextModel.getText().toString(), editTextYear.getText().toString());
 
                 FireBaseHelper  fireBaseHelper = new FireBaseHelper();
+
+
                 if (Car_Lock.valid_car)
                 {
                     fireBaseHelper.UpdateCar(Cur_User.car);
+
+                    Toast.makeText(requireContext(), "valid car", Toast.LENGTH_SHORT).show();
+                    editTextName.setText(Cur_User.car.getMake());
+                    editTextModel.setText(Cur_User.car.getModel());
+                    editTextYear.setText(Cur_User.car.getYear());
                 }
                 else {
                     Toast.makeText(requireContext(), "invalid car", Toast.LENGTH_SHORT).show();
