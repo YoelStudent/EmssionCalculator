@@ -107,7 +107,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor findIdByDate(String date)
     {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE date = "+ date;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '"+ date + "'";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

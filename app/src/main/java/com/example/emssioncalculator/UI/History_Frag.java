@@ -110,7 +110,16 @@ public class History_Frag extends Fragment implements View.OnClickListener {
         TextView textViewName = createTextView(name);
         Button button = new Button(requireContext());
         button.setText("DELETE");
-        button.setOnClickListener(this);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(requireContext());
+                Cursor cursor = myDatabaseHelper.findIdByDate(date);
+                cursor.moveToFirst();
+                myDatabaseHelper.deleteOneRow(cursor.getString(0));
+                tableRow.removeAllViews();
+            }
+        });
         buttons.add(button);
 
         // Add TextViews to the row

@@ -131,7 +131,7 @@ public class FireBaseHelper {
             }
         });
     }
-    public void UpdateUser(User u,  ProgressDialog pd)
+    public void UpdateUser(User u)
     {
 
 
@@ -153,7 +153,7 @@ public class FireBaseHelper {
                                @Override
                                public void onComplete(@NonNull Task<Void> task) {
                                    if (task.isSuccessful()) {
-                                        pd.dismiss();
+                                       firebaseAuth.getCurrentUser().updatePassword(u.getPass());
                                    }
                                }
                            })

@@ -100,9 +100,8 @@ public class ProfileFrag extends Fragment {
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Do something with the profile information
-                pd.show();
                 User user = new User(Cur_User.email, editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAge.getText().toString().trim());
-                fireBaseHelper.UpdateUser(user, pd);
+                fireBaseHelper.UpdateUser(user);
 
             }
         });
