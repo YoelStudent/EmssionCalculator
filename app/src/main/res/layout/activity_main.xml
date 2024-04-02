@@ -70,21 +70,21 @@
         android:layout_centerHorizontal="true">
 
     </CheckBox>
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cbRemeberMe"
-        android:layout_marginTop="4dp"
-        android:text="Forgot Password?"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tvForgotPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/cbRemeberMe"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:text="Forgot Password?"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:layout_centerHorizontal="true"/>-->
 
     <TextView
         android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvForgotPassword"
+        android:layout_below="@id/cbRemeberMe"
         android:layout_marginTop="8dp"
         android:text="Don't have an account? Sign up"
         android:textColor="#FFFFFF"

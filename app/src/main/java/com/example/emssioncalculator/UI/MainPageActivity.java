@@ -47,6 +47,7 @@ public class MainPageActivity extends AppCompatActivity
 {
     int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     ImageButton btn_add;
+    ImageButton btn_info;
     ImageButton btn_profile;
     ImageButton btn_history;
     PlacesClient placesClient;
@@ -60,6 +61,7 @@ public class MainPageActivity extends AppCompatActivity
         btn_add = findViewById(R.id.btnCalculateRoute);
         btn_profile = findViewById(R.id.btnAccount);
         btn_history = findViewById(R.id.btnHistory);
+        btn_info = findViewById(R.id.btnInfo);
         if (!Places.isInitialized()){
             Places.initialize(getApplicationContext(), Api_key);
         }
@@ -78,6 +80,7 @@ public class MainPageActivity extends AppCompatActivity
                 }
 
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
+                findViewById(R.id.info_tv).setVisibility(VISIBLE);
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
 
@@ -131,7 +134,7 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-
+                findViewById(R.id.info_tv).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, ProfileFrag.class, null)
@@ -145,7 +148,7 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-
+                findViewById(R.id.info_tv).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, History_Frag.class, null)
@@ -155,8 +158,23 @@ public class MainPageActivity extends AppCompatActivity
 
             }
         });
+        btn_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
+                findViewById(R.id.info_tv).setVisibility(View.GONE);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view, InfoFrag.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("name") // Name can be null
+                        .commit();
+
+            }
+        });
 
     }
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
