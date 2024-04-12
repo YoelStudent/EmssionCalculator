@@ -22,7 +22,7 @@
         android:text="Choose a site to visit:"
         android:layout_below="@id/titleTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/site1Button"
@@ -31,7 +31,7 @@
         android:text="Plant Trees"
         android:layout_below="@id/descriptionTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/site2Button"
@@ -40,7 +40,7 @@
         android:text="Cars Emission"
         android:layout_below="@id/site1Button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/site3Button"
@@ -49,6 +49,26 @@
         android:text="Global Warming"
         android:layout_below="@id/site2Button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="10dp"/>
+    <TextView
+
+        android:layout_below="@id/site3Button"
+        android:id="@+id/info_tv"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:background="#669E9E9E"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:text="About EcoDrive:
+
+
+EcoDrive is an innovative mobile application designed to provide users with insights into their carbon dioxide (CO2) emissions while driving. By utilizing advanced algorithms and a variety of apis, EcoDrive calculates the CO2 emissions generated during your commute. The app offers users a comprehensive understanding of their environmental impact, empowering them to make informed decisions to reduce their carbon footprint.">
+
+    </TextView>
+
 
 </RelativeLayout>

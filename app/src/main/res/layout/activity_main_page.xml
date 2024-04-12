@@ -23,23 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/info_tv"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:background="#669E9E9E"
-        android:textColor="@color/black"
-        android:fontFamily="sans-serif-light"
-        android:text="About EcoDrive:
-
-
-EcoDrive is an innovative mobile application designed to provide users with insights into their carbon dioxide (CO2) emissions while driving. By utilizing advanced algorithms and a variety of apis, EcoDrive calculates the CO2 emissions generated during your commute. The app offers users a comprehensive understanding of their environmental impact, empowering them to make informed decisions to reduce their carbon footprint.">
-
-    </TextView>
 
     <LinearLayout
         android:id="@+id/bottomNavigationBar"

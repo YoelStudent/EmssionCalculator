@@ -80,7 +80,6 @@ public class MainPageActivity extends AppCompatActivity
                 }
 
                 findViewById(R.id.autocomplete_fragment).setVisibility(VISIBLE);
-                findViewById(R.id.info_tv).setVisibility(VISIBLE);
                 final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
 
@@ -105,6 +104,7 @@ public class MainPageActivity extends AppCompatActivity
                                         public void onSuccess(Location location) {
                                             // Got last known location. In some rare situations this can be null.
                                             if (location != null) {
+
                                                 calc.getDistance(location,place);
                                                 if (Dis.valid_place)
                                                 {
@@ -134,7 +134,6 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-                findViewById(R.id.info_tv).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, ProfileFrag.class, null)
@@ -148,7 +147,6 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-                findViewById(R.id.info_tv).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, History_Frag.class, null)
@@ -162,7 +160,6 @@ public class MainPageActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 findViewById(R.id.autocomplete_fragment).setVisibility(View.GONE);
-                findViewById(R.id.info_tv).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, InfoFrag.class, null)
