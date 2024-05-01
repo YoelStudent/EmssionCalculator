@@ -87,47 +87,51 @@ public class MainActivity extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String Email = edEmail.getText().toString();
                 String Pass = edPass.getText().toString();
-                if (cbRem.isChecked())
-                {
-                    editor.putString("useremail", Email);
-                    editor.putString("userpass", Pass);
-                    editor.putBoolean("userrem", true);
+                if (!Pass.equals("") && !Email.equals("")){
+                    if (cbRem.isChecked())
+                    {
+                        editor.putString("useremail", Email);
+                        editor.putString("userpass", Pass);
+                        editor.putBoolean("userrem", true);
 
 
-                    editor.apply();
-                }
-                else
-                {
-                    editor.putString("useremail", " ");
-                    editor.putString("userpass", " ");
-                    editor.putBoolean("userrem", false);
-                    editor.apply();
-                }
-                firebaseAuth.signInWithEmailAndPassword(Email,Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Cur_User.email = Email;
-                            FireBaseHelper fireBaseHelper= new FireBaseHelper();
-                            fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
-                                @Override
-                                public void OnGotCar(Car car) {
-                                    Cur_User.car = car;
-                                    Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        editor.apply();
                     }
-                });
+                    else
+                    {
+                        editor.putString("useremail", " ");
+                        editor.putString("userpass", " ");
+                        editor.putBoolean("userrem", false);
+                        editor.apply();
+                    }
+                    firebaseAuth.signInWithEmailAndPassword(Email,Pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Cur_User.email = Email;
+                                FireBaseHelper fireBaseHelper= new FireBaseHelper();
+                                fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
+                                    @Override
+                                    public void OnGotCar(Car car) {
+                                        Cur_User.car = car;
+                                        Intent intent = new Intent(MainActivity.this, MainPageActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(MainActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
             }
         });
     }

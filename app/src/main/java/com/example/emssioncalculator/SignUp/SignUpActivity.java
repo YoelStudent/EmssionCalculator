@@ -4,6 +4,7 @@ import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.LogIn.MainActivity;
 import com.example.emssioncalculator.Models.Car;
 import com.example.emssioncalculator.Models.Car_Lock;
+import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.repository.repository;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,20 +64,19 @@ public class SignUpActivity extends AppCompatActivity {
                 User u = new User(edEmail.getText().toString(),edName.getText().toString(),edPass.getText().toString(), edBirthDate.getText().toString());
                 Calc calc = new Calc();
 
-
                 SignUp s = new SignUp(u,c);
-                FireBaseHelper fb = new FireBaseHelper();
                 calc.getCar(edCarMake.getText().toString(), edCarModel.getText().toString(), edCarYear.getText().toString());
                 if (!Car_Lock.valid_car){
                     Toast.makeText(c, "invalid car", Toast.LENGTH_SHORT).show();
-
                 }
                 else {
-                    Toast.makeText(c, "valid car", Toast.LENGTH_SHORT).show();
+
                     if(s.Check_User()==0)
                     {
-                        Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
+                        Cur_User.email = u.getEmail();
+
                         repository.Add_User(u);
+                        Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         startActivity(intent);

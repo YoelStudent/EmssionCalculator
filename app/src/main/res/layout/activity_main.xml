@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/app_logo"
         android:layout_marginTop="16dp"
-        android:hint="Username"
+        android:hint="Email"
         android:textColor="#212121"
         android:background="#9AFFFFFF"
         android:padding="14dp"

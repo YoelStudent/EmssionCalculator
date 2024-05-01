@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FireBaseHelper {
-    DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore database;
 
@@ -115,13 +114,78 @@ public class FireBaseHelper {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()){
-                                            String s = "gaynigger";
                                         }
                                     }
 
                                 });
                             }
                         });
+                        break;
+
+
+                    }
+
+
+
+                }
+            }
+        });
+    }
+    public void AddUser(User u, IAddUser iAddUser){
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
+
+        //todo add firebase auth mail auth
+        firebaseAuth.createUserWithEmailAndPassword(u.getEmail(), u.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    // Add a new document with a generated ID
+                    database.collection("users")
+                            .add(u.toHashMap())
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    iAddUser.OnAddUser();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+
+                }
+
+            }
+        });
+
+    }
+    public void AddCar(Car c)
+    {
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
+        //todo fix car update
+        RetrieveDoc(new OnFetch() {
+            @Override
+            public void OnComplete(Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+
+
+                    // Add a new document with a generated ID
+                    if (document.getData().get("email").toString().equals(Cur_User.email))
+                    {
+                        database.collection("users").document(document.getId()).collection("car").add(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                            }
+                        });
+                        break;
+
 
                     }
 
@@ -162,10 +226,6 @@ public class FireBaseHelper {
                                public void onFailure(@NonNull Exception e) {
                                }
                            });
-
-
-
-
                }
            }
        });
@@ -198,36 +258,5 @@ public class FireBaseHelper {
     {
         void OnAddUser();
     }
-    public void AddUser(User u, IAddUser iAddUser){
-        firebaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseFirestore.getInstance();
 
-        //todo add firebase auth mail auth
-        firebaseAuth.createUserWithEmailAndPassword(u.getEmail(), u.getPass()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    // Add a new document with a generated ID
-                    database.collection("users")
-                            .add(u.toHashMap())
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    iAddUser.OnAddUser();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                }
-                            });
-
-                }
-
-            }
-        });
-
-    }
 }
