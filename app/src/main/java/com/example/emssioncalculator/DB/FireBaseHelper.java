@@ -163,7 +163,7 @@ public class FireBaseHelper {
         });
 
     }
-    public void AddCar(Car c)
+    public void AddCar(Car c, IAddCar iAddCar)
     {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
@@ -181,7 +181,7 @@ public class FireBaseHelper {
                         database.collection("users").document(document.getId()).collection("car").add(c.toHashMap()).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
-
+                                iAddCar.OnAddCar();
                             }
                         });
                         break;
@@ -253,6 +253,9 @@ public class FireBaseHelper {
                 }
             }
         });
+    }
+    public interface IAddCar{
+        void OnAddCar();
     }
     public interface IAddUser
     {

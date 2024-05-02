@@ -75,11 +75,16 @@ public class SignUpActivity extends AppCompatActivity {
                     {
                         Cur_User.email = u.getEmail();
 
-                        repository.Add_User(u);
-                        Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
+                        repository.Add_User(u, new FireBaseHelper.IAddCar() {
+                            @Override
+                            public void OnAddCar() {
+                                Toast.makeText(c, "user added", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
 
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        startActivity(intent);
+
                     }
                 }
             }

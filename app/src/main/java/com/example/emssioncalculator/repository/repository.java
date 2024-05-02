@@ -6,7 +6,6 @@ import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.DB.MyDatabaseHelper;
 import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
-
 public class repository {
 
     private FireBaseHelper fb;
@@ -14,13 +13,13 @@ public class repository {
     {
         fb = new FireBaseHelper();
     }
-    public void Add_User(User user)
+    public void Add_User(User user, FireBaseHelper.IAddCar callback)
     {
        //TODO: CHECK IF EMAIL UNIQUE
         fb.AddUser(user, new FireBaseHelper.IAddUser() {
             @Override
             public void OnAddUser() {
-                fb.AddCar(Cur_User.car);
+                fb.AddCar(Cur_User.car, callback);
             }
         });
 
