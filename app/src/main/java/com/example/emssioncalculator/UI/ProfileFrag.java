@@ -73,7 +73,7 @@ public class ProfileFrag extends Fragment {
     private void showProfileUpdateDialog() {
         ProgressDialog pd = new ProgressDialog(requireContext());
         pd.setCancelable(false);
-        pd.setTitle("Waiting for email verification");
+        pd.setTitle("");
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.update_alert, null);
@@ -81,7 +81,6 @@ public class ProfileFrag extends Fragment {
         EditText editTextAge = dialogView.findViewById(R.id.editTextAge);
         EditText editTextPass = dialogView.findViewById(R.id.editTextPass);
         TextView textView = dialogView.findViewById(R.id.editTextEmail);
-        textView.setText(Cur_User.email);
         dialogBuilder.setView(dialogView);
 
 

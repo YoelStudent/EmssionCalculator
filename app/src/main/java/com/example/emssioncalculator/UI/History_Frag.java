@@ -99,14 +99,15 @@ public class History_Frag extends Fragment implements View.OnClickListener {
     private void addRowToTable(String index, String co2, String trees, String date, String name) {
         // Create a new row
         TableRow tableRow = new TableRow(requireContext());
-
         tableRow.setBackgroundResource(R.drawable.row_background);
 
         // Create TextViews for each column
         //TextView textViewIndex = createTextView(index);
         TextView textViewCO2 = createTextView(co2);
         TextView textViewTrees = createTextView(trees);
+
         TextView textViewDate = createTextView(date);
+
         TextView textViewName = createTextView(name);
         Button button = new Button(requireContext());
         button.setText("DELETE");

@@ -1,5 +1,6 @@
 package com.example.emssioncalculator.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import com.example.emssioncalculator.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CalcEmm extends Fragment {
@@ -123,8 +125,16 @@ public class CalcEmm extends Fragment {
             public void onClick(View v) {
                 MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(requireContext());
                 Date d1 = new Date();
+
+                String pattern = "MM-dd-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
                 String s = d1.toString();
-                myDatabaseHelper.addItem("0",result,trees,s,"");
+                s.replace("GMT", "");
+                s = s.substring(0, s.length());
+                myDatabaseHelper.addItem("0",result,trees,simpleDateFormat.format(d1),"");
+
+
             }
 
         });

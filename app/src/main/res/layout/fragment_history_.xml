@@ -13,7 +13,6 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"
             android:id="@+id/tableLay">
 
             <!-- Table Header -->
@@ -23,15 +22,6 @@
                 android:background="#E0E0E0"
                 android:padding="8dp">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textIndex"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="Index"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="#000000"-->
-<!--                    android:gravity="center"/>-->
 
                 <TextView
                     android:id="@+id/textCO2"
@@ -76,9 +66,7 @@
 
             </TableRow>
 
-            <!-- Table Rows -->
 
-            <!-- Add more rows as needed -->
 
         </TableLayout>
     </ScrollView>

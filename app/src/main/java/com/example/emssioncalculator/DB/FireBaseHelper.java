@@ -210,22 +210,24 @@ public class FireBaseHelper {
 
 
                        // Add a new document with a generated ID
-
-                   database.collection("users")
-                           .document(document.getId()).update(u.toHashMap())
-                           .addOnCompleteListener(new OnCompleteListener<Void>() {
-                               @Override
-                               public void onComplete(@NonNull Task<Void> task) {
-                                   if (task.isSuccessful()) {
-                                       firebaseAuth.getCurrentUser().updatePassword(u.getPass());
+                   if(document.getData().get("email").toString().equals(Cur_User.email))
+                   {
+                       database.collection("users")
+                               .document(document.getId()).update(u.toHashMap())
+                               .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<Void> task) {
+                                       if (task.isSuccessful()) {
+                                           firebaseAuth.getCurrentUser().updatePassword(u.getPass());
+                                       }
                                    }
-                               }
-                           })
-                           .addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull Exception e) {
-                               }
-                           });
+                               })
+                               .addOnFailureListener(new OnFailureListener() {
+                                   @Override
+                                   public void onFailure(@NonNull Exception e) {
+                                   }
+                               });
+                   }
                }
            }
        });
