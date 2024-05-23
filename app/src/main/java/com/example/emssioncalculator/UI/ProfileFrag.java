@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.emssioncalculator.CalcHelper.Calc;
 import com.example.emssioncalculator.DB.FireBaseHelper;
-import com.example.emssioncalculator.Models.Car;
 import com.example.emssioncalculator.Models.Car_Lock;
 import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
@@ -31,28 +28,25 @@ import com.example.emssioncalculator.R;
  */
 public class ProfileFrag extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Arguments for fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    // Parameters
     private String mParam1;
     private String mParam2;
 
+    // Required empty public constructor
     public ProfileFrag() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Factory method to create a new instance of this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment ProfileFrag.
      */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFrag newInstance(String param1, String param2) {
         ProfileFrag fragment = new ProfileFrag();
         Bundle args = new Bundle();
@@ -70,22 +64,25 @@ public class ProfileFrag extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    // Method to show the profile update dialog
     private void showProfileUpdateDialog() {
         ProgressDialog pd = new ProgressDialog(requireContext());
         pd.setCancelable(false);
         pd.setTitle("");
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.update_alert, null);
+
         EditText editTextName = dialogView.findViewById(R.id.editTextName);
         EditText editTextAge = dialogView.findViewById(R.id.editTextAge);
         EditText editTextPass = dialogView.findViewById(R.id.editTextPass);
-        TextView textView = dialogView.findViewById(R.id.editTextEmail);
+
         dialogBuilder.setView(dialogView);
-
-
         dialogBuilder.setTitle("Update Profile");
         dialogBuilder.setMessage("Please fill in your information:");
+
         FireBaseHelper fireBaseHelper = new FireBaseHelper();
         fireBaseHelper.GetUser(new FireBaseHelper.IGetUser() {
             @Override
@@ -93,72 +90,69 @@ public class ProfileFrag extends Fragment {
                 editTextName.setText(user.getName());
                 editTextPass.setText(user.getPass());
                 editTextAge.setText(user.getAge());
-
             }
         });
+
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Do something with the profile information
+                // Update profile information
                 User user = new User(Cur_User.email, editTextName.getText().toString().trim(), editTextPass.getText().toString().trim(), editTextAge.getText().toString().trim());
-                fireBaseHelper.UpdateUser(user);
-
+                int err = user.Check_User();
+                if (err == 0) {
+                    fireBaseHelper.UpdateUser(user);
+                } else if (err == 2) {
+                    Toast.makeText(requireContext(), "invalid name", Toast.LENGTH_SHORT).show();
+                } else if (err == 3) {
+                    Toast.makeText(requireContext(), "invalid Password", Toast.LENGTH_SHORT).show();
+                } else if (err == 4) {
+                    Toast.makeText(requireContext(), "invalid Name", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Cancelled.
+                // Cancelled
             }
         });
 
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
     }
+
+    // Method to show the car search dialog
     private void showCarSearch() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.car_search_dialog, null);
+
         EditText editTextName = dialogView.findViewById(R.id.editTextName);
         EditText editTextModel = dialogView.findViewById(R.id.editTextModel);
         EditText editTextYear = dialogView.findViewById(R.id.editTextYear);
 
         dialogBuilder.setView(dialogView);
-
-
         dialogBuilder.setTitle("Search Car");
         dialogBuilder.setMessage("Please fill in your information:");
+
         FireBaseHelper fireBaseHelper = new FireBaseHelper();
-//        fireBaseHelper.GetCar(new FireBaseHelper.IGetCar() {
-//            @Override
-//            public void OnGotCar(Car car) {
-//                editTextName.setText(car.getMake());
-//                editTextModel.setText(car.getModel());
-//                editTextYear.setText(car.getYear());
-//            }
-//        });
         editTextName.setText(Cur_User.car.getMake());
         editTextModel.setText(Cur_User.car.getModel());
         editTextYear.setText(Cur_User.car.getYear());
 
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Do something with the profile information
+                // Update car information
                 Calc c = new Calc();
-
                 c.getCar(editTextName.getText().toString(), editTextModel.getText().toString(), editTextYear.getText().toString());
+                FireBaseHelper fireBaseHelper = new FireBaseHelper();
 
-                FireBaseHelper  fireBaseHelper = new FireBaseHelper();
-
-
-                if (Car_Lock.valid_car)
-                {
+                if (Car_Lock.valid_car) {
                     fireBaseHelper.UpdateCar(Cur_User.car);
-
                     Toast.makeText(requireContext(), "valid car", Toast.LENGTH_SHORT).show();
                     editTextName.setText(Cur_User.car.getMake());
                     editTextModel.setText(Cur_User.car.getModel());
                     editTextYear.setText(Cur_User.car.getYear());
-                }
-                else {
+                } else {
                     Toast.makeText(requireContext(), "invalid car", Toast.LENGTH_SHORT).show();
                     editTextName.setText(Cur_User.car.getMake());
                     editTextModel.setText(Cur_User.car.getModel());
@@ -166,9 +160,10 @@ public class ProfileFrag extends Fragment {
                 }
             }
         });
+
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Cancelled.
+                // Cancelled
             }
         });
 
@@ -176,30 +171,35 @@ public class ProfileFrag extends Fragment {
         alertDialog.show();
     }
 
+    // UI components
     Button btnUp;
-
     Button btnCar;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // Initialize buttons
         btnUp = view.findViewById(R.id.btnUp);
         btnCar = view.findViewById(R.id.btnCarSearch);
+
+        // Set click listener for "Car Search" button
         btnCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCarSearch();
             }
         });
+
+        // Set click listener for "Update Profile" button
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProfileUpdateDialog();
             }
         });
-        return view;
 
+        return view;
     }
 }

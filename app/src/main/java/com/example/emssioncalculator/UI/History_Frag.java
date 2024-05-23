@@ -20,11 +20,7 @@ import com.example.emssioncalculator.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link History_Frag#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class History_Frag extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -102,7 +98,6 @@ public class History_Frag extends Fragment implements View.OnClickListener {
         tableRow.setBackgroundResource(R.drawable.row_background);
 
         // Create TextViews for each column
-        //TextView textViewIndex = createTextView(index);
         TextView textViewCO2 = createTextView(co2);
         TextView textViewTrees = createTextView(trees);
 
@@ -147,15 +142,4 @@ public class History_Frag extends Fragment implements View.OnClickListener {
         return textView;
     }
 
-    @Override
-    public void onClick(View v) {
-//        for (int i = 0; i < buttons.size(); i++)
-//        {
-//            if (v == buttons.get(i)){
-//                MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(requireContext());
-//                myDatabaseHelper.deleteOneRow(String.valueOf(i));
-//                buttons.remove(i);
-//            }
-//        }
-    }
 }

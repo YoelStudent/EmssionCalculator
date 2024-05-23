@@ -15,6 +15,38 @@ public class User {
         this.Name = Name;
         this.Age = Age;
     }
+    public int Check_User()
+    {
+        if (!isValidName(Name))
+        {
+            return 2;
+        } else if (!isValidPassword(Pass)) {
+         return 3;
+        } else if (!isValidAge(Integer.parseInt(Age))) {
+         return 4;
+        } else {
+            // Proceed with sign-up
+            return 0;
+        }
+    }
+
+
+
+    public static boolean isValidName(String name) {
+        // Check if the name contains only English characters
+        return name.matches("[a-zA-Z ]+");
+    }
+
+    public static boolean isValidPassword(String password) {
+        // Check if password length is between 6 and 20 characters
+        return password.length() >= 6 && password.length() <= 20;
+    }
+
+    public static boolean isValidAge(int age) {
+        // Check if age is between 16 and 100
+        return age >= 16 && age <= 100;
+    }
+
 
     public String getEmail() {
         return Email;

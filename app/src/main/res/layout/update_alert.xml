@@ -9,17 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"/>
-    <TextView
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextName"
-        android:hint="Email"/>
+
     <EditText
         android:id="@+id/editTextPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextEmail"
+        android:layout_below="@id/editTextName"
         android:hint="Email"/>
 
 
@@ -29,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextPass"
         android:hint="Age"
-
+        android:inputType="number"
         />
 
 </RelativeLayout>

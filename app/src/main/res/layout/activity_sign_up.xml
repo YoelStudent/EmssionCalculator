@@ -69,7 +69,7 @@
         android:background="#CCFFFFFF"
         android:padding="10dp"
         android:elevation="2dp"
-        android:inputType="date" />
+        android:inputType="number" />
     <EditText
         android:id="@+id/editTextCarMake"
         android:layout_width="match_parent"
