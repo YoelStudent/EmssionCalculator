@@ -101,11 +101,11 @@ public class ProfileFrag extends Fragment {
                 if (err == 0) {
                     fireBaseHelper.UpdateUser(user);
                 } else if (err == 2) {
-                    Toast.makeText(requireContext(), "invalid name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "invalid Name", Toast.LENGTH_SHORT).show();
                 } else if (err == 3) {
                     Toast.makeText(requireContext(), "invalid Password", Toast.LENGTH_SHORT).show();
                 } else if (err == 4) {
-                    Toast.makeText(requireContext(), "invalid Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "invalid Age", Toast.LENGTH_SHORT).show();
                 }
             }
         });
