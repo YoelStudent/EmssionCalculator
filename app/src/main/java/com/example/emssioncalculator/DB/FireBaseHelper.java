@@ -267,6 +267,38 @@ public class FireBaseHelper {
             }
         });
     }
+    public void FcheckEmailExistence(String email, Check_Email callback) {
+        database = FirebaseFirestore.getInstance();
+
+        database.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                boolean usernameExists = false;
+                boolean emailExists = false;
+
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.getData().get("email").toString().equals(email)) {
+                        emailExists = true;
+                    }
+                }
+                callback.onEmailCheckCom(emailExists);
+            }
+        });
+    }
+    public interface Check_Email {
+        /**
+         * Called when the credentials check is complete.
+         *
+         * @param doesUserExist True if the user exists, false otherwise.
+         * @param doesEmailExist True if the email exists, false otherwise.
+         */
+        void onEmailCheckCom(boolean doesEmailExist);
+    }
+
+
+
+
+
 
 
 

@@ -3,9 +3,10 @@ package com.example.emssioncalculator.SignUp;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.emssioncalculator.DB.FireBaseHelper;
 import com.example.emssioncalculator.Models.User;
 
-enum error_codes {EMAIL, NAME,PASS, ADDRESS,AGE};
+;
 public class SignUp {
     User user;
     Context context;
@@ -14,6 +15,11 @@ public class SignUp {
         this.user = u;
         this.context = c;
     }
+//    public boolean Check_Unique_Email(
+//            FireBaseHelper.GetUser(new FireBaseHelper.IGetUser(){
+//
+//    })
+//    )
     public int Check_User(){
         if (!isValidEmail(user.getEmail())) {
             showToast("Invalid email format");

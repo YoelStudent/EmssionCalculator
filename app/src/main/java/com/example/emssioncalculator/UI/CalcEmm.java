@@ -113,7 +113,12 @@ public class CalcEmm extends Fragment {
         // Calculate emissions based on fuel type
         if (Cur_User.car.getFuelType().equals("diesel")) {
             res = fuel_con * Diesel;
-        } else {
+        }
+        else if (Cur_User.car.getFuelType().equals("electricity"))
+        {
+             res = 0.128 * Math.floor(Double.parseDouble(d));
+        }
+        else {
             res = Gasoline * fuel_con;
         }
 
