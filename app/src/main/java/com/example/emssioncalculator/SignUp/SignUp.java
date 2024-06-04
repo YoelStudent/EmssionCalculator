@@ -15,11 +15,6 @@ public class SignUp {
         this.user = u;
         this.context = c;
     }
-//    public boolean Check_Unique_Email(
-//            FireBaseHelper.GetUser(new FireBaseHelper.IGetUser(){
-//
-//    })
-//    )
     public int Check_User(){
         if (!isValidEmail(user.getEmail())) {
             showToast("Invalid email format");
@@ -31,7 +26,6 @@ public class SignUp {
             showToast("Age must be between 16 and 100");
         } else {
             // Proceed with sign-up
-            showToast("Sign-up successful");
             return 0;
         }
         return 1;

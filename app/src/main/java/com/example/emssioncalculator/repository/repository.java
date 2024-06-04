@@ -16,11 +16,12 @@ public class repository {
     public repository(Context context)
     {
         fb = new FireBaseHelper();
+        this.context = context;
     }
         public void Add_User(User user, FireBaseHelper.IAddCar callback)
         {
-    
-            checkEmailExistence(user.getEmail(), new FireBaseHelper.Check_Email() {
+
+            fb.FcheckEmailExistence(user.getEmail(), new FireBaseHelper.Check_Email() {
                 @Override
                 public void onEmailCheckCom(boolean doesEmailExist) {
                     if (!doesEmailExist)
@@ -38,9 +39,5 @@ public class repository {
                     }
                 }
             });
-    }
-    public void checkEmailExistence(String email, FireBaseHelper.Check_Email callback)
-    {
-        fb.FcheckEmailExistence(email, callback);
     }
 }
