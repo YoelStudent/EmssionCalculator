@@ -15,7 +15,8 @@ public class SignUp {
         this.user = u;
         this.context = c;
     }
-    public int Check_User(){
+    public int Check_User()
+    {
         if (!isValidEmail(user.getEmail())) {
             showToast("Invalid email format");
         } else if (!isValidName(user.getName())) {

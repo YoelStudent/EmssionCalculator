@@ -170,10 +170,44 @@ public class ProfileFrag extends Fragment {
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
     }
+    private void showDeleteDialog() {
+        ProgressDialog pd = new ProgressDialog(requireContext());
+        pd.setCancelable(false);
+        pd.setTitle("Delete User");
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.delete_alert, null);
+
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("Delete Profile");
+        dialogBuilder.setMessage("ARE YOU SURE YOU WANT TO DELETE PROFILE");
+
+        FireBaseHelper fireBaseHelper = new FireBaseHelper();
+
+        dialogBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Update profile information
+
+                fireBaseHelper.DeleteUser(requireContext());
+            }
+        });
+
+        dialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelled
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+    }
 
     // UI components
     Button btnUp;
     Button btnCar;
+    Button btnDel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -183,6 +217,7 @@ public class ProfileFrag extends Fragment {
         // Initialize buttons
         btnUp = view.findViewById(R.id.btnUp);
         btnCar = view.findViewById(R.id.btnCarSearch);
+        btnDel = view.findViewById(R.id.btnDelete);
 
         // Set click listener for "Car Search" button
         btnCar.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +232,13 @@ public class ProfileFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 showProfileUpdateDialog();
+            }
+        });
+
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteDialog();
             }
         });
 

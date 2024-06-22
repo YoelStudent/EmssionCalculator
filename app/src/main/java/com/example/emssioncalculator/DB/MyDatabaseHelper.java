@@ -121,51 +121,5 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME);
     }
-//    Boolean CheckLogIn(String Email, String Pass)
-//    {
-//
-//        String query = " SELECT EXISTS (SELECT * FROM " + TABLE_NAME + " WHERE Email = "+ Email+ " AND password = "+ Pass+ ")";
-//        try (SQLiteDatabase db = this.getReadableDatabase())
-//        {
-//            Cursor cursor = db.rawQuery(query,null);
-//            Boolean result = false;
-//            if (cursor!=null){
-//                if (cursor.moveToFirst()){
-//                    int exists = cursor.getInt(0);
-//                    result = exists==1;
-//                }
-//                cursor.close();
-//            }
-//            return result;
-//
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-//    public boolean checkExists(String Email)
-//    {
-//        String query = " SELECT EXISTS (SELECT * FROM " + TABLE_NAME + " WHERE Email = "+ Email+ ")";
-//        try (SQLiteDatabase db = this.getReadableDatabase())
-//        {
-//            Cursor cursor = db.rawQuery(query,null);
-//            Boolean result = false;
-//            if (cursor!=null){
-//                if (cursor.moveToFirst()){
-//                    int exists = cursor.getInt(0);
-//                    result = exists==1;
-//                }
-//                cursor.close();
-//            }
-//            return result;
-//
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
+
 }

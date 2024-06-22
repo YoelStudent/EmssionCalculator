@@ -3,10 +3,15 @@ package com.example.emssioncalculator.DB;
 // Import necessary classes and methods
 
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
+import com.example.emssioncalculator.LogIn.MainActivity;
 import com.example.emssioncalculator.Models.Cur_User;
 import com.example.emssioncalculator.Models.User;
+import com.example.emssioncalculator.UI.MainPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -267,6 +272,28 @@ public class FireBaseHelper {
             }
         });
     }
+    public void DeleteUser(Context context)
+    {
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
+        RetrieveDoc(new OnFetch() {
+            @Override
+            public void OnComplete(Task<QuerySnapshot> task) {
+                String s =firebaseAuth.getCurrentUser().getEmail();
+
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    if(document.getData().get("email").toString().equals(s))
+                    {
+                        firebaseAuth.getCurrentUser().delete();
+                        document.getReference().delete();
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                }
+            }
+        });
+    }
     public void FcheckEmailExistence(String email, Check_Email callback) {
         database = FirebaseFirestore.getInstance();
 
@@ -286,12 +313,7 @@ public class FireBaseHelper {
         });
     }
     public interface Check_Email {
-        /**
-         * Called when the credentials check is complete.
-         *
-         * @param doesUserExist True if the user exists, false otherwise.
-         * @param doesEmailExist True if the email exists, false otherwise.
-         */
+
         void onEmailCheckCom(boolean doesEmailExist);
     }
 

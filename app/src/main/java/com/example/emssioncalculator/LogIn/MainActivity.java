@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Set a click listener for the sign-up TextView
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
